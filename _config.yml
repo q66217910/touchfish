@@ -7,3 +7,16 @@ labels:
   - href: /payment.html
     label: 支付系列
     target: _self
+
+
+#分页配置
+paginate: 12
+paginate_path: 'page:num'
+
+
+#精选文章
+classes:
+  -
+    href: /cartoon.html
+    name: es
+    describe: 不要点
