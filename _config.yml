@@ -5,5 +5,5 @@ subtitle: 摸鱼还是舒服啊
 
 labels:
   - href: /payment.html
-    label: Pay
+    label: 支付系列
     target: _self
