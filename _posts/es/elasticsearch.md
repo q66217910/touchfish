@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Elasticsearch
-category: Elasticsearch
+category: elasticsearch
 tags: [life]
 no-post-nav: true
 ---
