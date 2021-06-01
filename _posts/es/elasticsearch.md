@@ -1,10 +1,9 @@
 ---
 layout: post
 title: Elasticsearch
-no-post-nav: true
 category: Elasticsearch
-copyright: Elasticsearch
-excerpt: Elasticsearch
+tags: [life]
+no-post-nav: true
 ---
 
 # Elasticsearch
