@@ -15,9 +15,9 @@ keywords: 摸鱼
 encoding: "utf-8"
 favicon: favicon.ico
 
-repository: ityouknow/ityouknow.github.io
+repository: q66217910/touchfishes
 github_url: https://github.com/q66217910
-url: https://www.touchfishes.com/
+url: https://blog.touchfishes.com/
 enforce_ssl: touchfishes.com
 
 ## Gem
@@ -98,16 +98,21 @@ navs:
     label: Home
 
   -
-    href: http://laughyouth.com/
-    label: Comics
-    target: _blank
+    href: /middleware.html
+    label: 中间件
+    target: _self
+    subnav:
+      - subHref: /elasticsearch.html
+        subLabel: Elasticsearch
+
+      - subHref: /mq.html
+        subLabel: MQ
 
   -
     href: /spring-boot.html
     label: Spring Boot
     target: _self
     subnav:
-
       -
         subHref: /spring-boot.html
         subLabel: Spring Boot
