@@ -139,21 +139,21 @@ no-post-nav: true
    -  **index.number_of_shards (静)：** 索引分片数量
 
    -  **index.shard.check_on_startup (静)：**  分片打开前是否检查分片，检测到分片损坏阻止分片打开。
-
-     - **false:** 不检测
-     - **checksum:** 只检测物理结构
-     - **true:**  检查物理和逻辑损坏，相对比较耗CPU 
+     
+      - **false:** 不检测
+      - **checksum:** 只检测物理结构
+      - **true:**  检查物理和逻辑损坏，相对比较耗CPU 
 
    -  **index.codec(静):**  数据存储的压缩算法 
 
-     -  **LZ4(默认)：**  无损压缩算法，压缩速度为每核心 400 MB/s 
-     -  **best_compression  ：**  DEFLATE是同时使用了LZ77算法 ， 比LZ4可以获得更好的压缩 ，但是存储性能比LZ4低。
+      -  **LZ4(默认)：**  无损压缩算法，压缩速度为每核心 400 MB/s 
+      -  **best_compression  ：**  DEFLATE是同时使用了LZ77算法 ， 比LZ4可以获得更好的压缩 ，但是存储性能比LZ4低。
 
    -  **index.routing_partition_size (静)：**  路由分区数 ， _routing 默认为__id
 
-     原路由算法：  **hash(_routing) % number_of_shardings** 
+      原路由算法：  **hash(_routing) % number_of_shardings** 
 
-     设置后路由算法： **(hash(_routing) + hash(_id) % index.routing_parttion_size ) % number_of_shards** 
+      设置后路由算法： **(hash(_routing) + hash(_id) % index.routing_parttion_size ) % number_of_shards** 
 
    
 
