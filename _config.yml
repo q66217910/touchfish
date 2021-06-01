@@ -105,12 +105,14 @@ navs:
       - subHref: /elasticsearch.html
         subLabel: Elasticsearch
 
+      - subHref: /mq.html
+        subLabel: MQ
+
   -
     href: /spring-boot.html
     label: Spring Boot
     target: _self
     subnav:
-
       -
         subHref: /spring-boot.html
         subLabel: Spring Boot
