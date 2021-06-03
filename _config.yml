@@ -118,18 +118,9 @@ navs:
 
   -
 
-    href: /python.html
-    label: Python
-    subnav:
-
-      -
-        subHref: /python.html
-        subLabel: Python 教程
-
-      -
-        subHref: http://www.justdopython.com
-        subLabel: Python 技术
-        target: _blank
+    href: /jvm.html
+    label: JVM
+    target: _self
 
   -
     href: /archives.html
