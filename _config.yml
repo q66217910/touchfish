@@ -115,17 +115,21 @@ navs:
     href: /java.html
     label: JAVA
     target: _self
-
+    subnav:
+      - subHref: /set.html
+        subLabel: 集合
+      - subHref: /thread.html
+        subLabel: 多线程
+      - subHref: /thread.html
   -
-
     href: /jvm.html
     label: JVM
     target: _self
 
-  -
-    href: /archives.html
-    label: Archives
+  - href: /microservice.html
+    label: 微服务
     target: _self
+
 
 
 
@@ -172,19 +176,9 @@ labels:
 classes:
 
   -
-    href: /cartoon.html
-    name: 不会笑青年
-    describe: 内心沉稳 ，放荡不羁。
-
-  -
-    href: /life.html
-    name: 我的故事
-    describe: 生活就是故事，故事就是生活
-
-  -
-    href: /it.html
-    name: IT行业深度报道
-    describe: IT大佬，互联网知名公司的故事
+    href: /touchfishes.html
+    name: 摸鱼故事
+    describe: 摸鱼故事
 
 
 
