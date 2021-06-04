@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ConcurrentHashMap源码解析
-category: [java,set]
+category: set
 tags: [life]
 no-post-nav: true
 ---
