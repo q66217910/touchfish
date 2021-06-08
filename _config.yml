@@ -130,7 +130,10 @@ navs:
   - href: /container.html
     label: 容器
     target: _self
-
+    
+  - href: /leetcode.html
+    label: leetcode
+    target: _self
 
 
 
@@ -141,11 +144,6 @@ labels:
     href: /payment.html
     label: Pay
     target: _self
-
-  -
-    href: /leetcode.html
-    label: leetcode
-    target: _blank
 
   -
     href: /mongodb.html
