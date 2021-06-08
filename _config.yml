@@ -17,7 +17,7 @@ favicon: favicon.ico
 
 repository: q66217910/touchfishes
 github_url: https://github.com/q66217910
-url: https://blog.touchfishes.com/
+url: https://blog.touchfishes.com
 enforce_ssl: touchfishes.com
 
 ## Gem
@@ -130,6 +130,10 @@ navs:
     label: 微服务
     target: _self
 
+  - href: /container.html
+    label: 容器
+    target: _self
+
 
 
 
@@ -142,8 +146,8 @@ labels:
     target: _self
 
   -
-    href: /fastdfs.html
-    label: FastDFS
+    href: /leetcode.html
+    label: leetcode
     target: _blank
 
   -
