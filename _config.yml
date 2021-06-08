@@ -120,11 +120,8 @@ navs:
         subLabel: 集合
       - subHref: /thread.html
         subLabel: 多线程
-      - subHref: /thread.html
-  -
-    href: /jvm.html
-    label: JVM
-    target: _self
+      - subHref: /jvm.html
+        subLabel: JVM
 
   - href: /microservice.html
     label: 微服务
