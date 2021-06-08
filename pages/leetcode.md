@@ -8,13 +8,4 @@ css: ['blog-page.css']
 permalink: /leetcode
 ---
 
-<div class="row">
-</div>
-<script>
-    $(document).ready(function(){
-
-        // Enable bootstrap tooltip
-        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-
-    });
-</script>
+{% include leetcode.html %}
