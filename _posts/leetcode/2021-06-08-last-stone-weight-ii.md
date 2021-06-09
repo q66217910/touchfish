@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 【leetcode】最后一块石头的重量 II
-category: leetcode
+category: dp
 tags: [leetcode]
 no-post-nav: true
 ---
