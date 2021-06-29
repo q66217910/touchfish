@@ -107,6 +107,9 @@ navs:
 
       - subHref: /mq.html
         subLabel: MQ
+        
+      - subHref: /mysql.html
+        subLabel: MYSQL
 
       - subHref: /zookeeper.html
         subLabel: zookeeper
