@@ -102,6 +102,9 @@ navs:
     label: 中间件
     target: _self
     subnav:
+      - subHref: /redis.html
+        subLabel: Redis
+        
       - subHref: /elasticsearch.html
         subLabel: Elasticsearch
 
