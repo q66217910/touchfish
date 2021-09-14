@@ -1,0 +1,58 @@
+#创建namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redis
+  labels:
+    name: redis
+
+## 部署redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: redis
+  name: redis
+  namespace: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis
+  template:
+    metadata:
+      labels:
+        name: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+          volumeMounts:
+            - name: redis-project
+              mountPath: "/data/redis"
+          command:
+            - "redis-server"
+      volumes:
+        - name: redis-project
+          hostPath:
+            path: /data/redis
+##创建Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-headless
+  labels:
+    name: redis
+  namespace: redis
+spec:
+  type: NodePort
+  ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+      nodePort: 6379
+  selector:
+    name: redis
+
