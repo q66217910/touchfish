@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+#元数据
+metadata:
+  #pod的名称
+  name: zd
+  #namespace
+  namespace: zd
+  #标签列表(Label其实就一对 key/value),Labels的值对系统本身并没有什么含义，
+  #只是对用户才有意义。同一个资源对象的labels属性的key必须唯一.
+  #label可以附加到各种资源对象上，如Node,Pod,Service,RC等。一个资源拥有多个标签，可以实现不同维度的管理
+  labels:
+    #label 必须以字母或数字开头，可以使用字母、数字、连字符、点和下划线，最长63个字符
+    #kubectl get pods --show-labels(查看pod显示labels)
+    - environment: dev
+    - release: stable
+    - app: zd
+  #自定义注解列表(客户端程序可以获取这些元数据)
+  annotations:
+    - imageregistry: "https://hub.docker.com/"
+spec:
+  #镜像列表
+  containers:
+    - name: tomcat
+      #镜像名称
+      image: redis:latest
+      #镜像拉取策略 （Always：每次拉取最新镜像，在:latest时默认Always）
+      #IfNotPresent: 已经存在的情况下直接略过拉取镜像的操作
+      #Never: 只使用本地镜像，从不拉取
+      imagePullPolicy: Always
+
