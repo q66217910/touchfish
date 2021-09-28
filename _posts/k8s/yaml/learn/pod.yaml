@@ -19,6 +19,23 @@ metadata:
   annotations:
     - imageregistry: "https://hub.docker.com/"
 spec:
+  #挂载数据卷
+  #
+  volumes:
+    - name: zd
+      emptyDir: {}
+    - name: zd-1
+      #投射数据卷(Secret/ConfigMap/Downward API/ServiceAccountToken)
+      projected:
+        sources:
+          #Secret:加密数据，存放到 Etcd 中
+          #ConfigMap: 应用配置
+          #Downward API:让 Pod 里的容器能够直接获取到这个 Pod API 对象本身的信息。
+          #ServiceAccountToken:授权信息
+          - secret:
+              name: zd-secret
+        
+        
   #镜像列表
   containers:
     - name: tomcat
@@ -28,4 +45,48 @@ spec:
       #IfNotPresent: 已经存在的情况下直接略过拉取镜像的操作
       #Never: 只使用本地镜像，从不拉取
       imagePullPolicy: Always
+      #使用数据卷
+      volumeMounts:
+          #容器内安装数据卷的位置
+        - mountPath: /home
+          #数据卷的名称
+          name: zd-volume
+      #容器要使用的块设备列表
+      volumeDevices:
+          #是设备将映射到的容器内的路径
+        - devicePath: /app
+          name: zd-volume
+      #容器中设置的环境变量
+      env:
+        - name: name
+          value: value
+      #ConfigMap定义的配置可以通过envFrom传入给容器
+      envFrom:
+        - configMapRef:
+            name: zd-mysql-nacos
+          #秘钥配置
+          secretRef:
+            name: zd-secret
+      
 
+#mysql配置
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: zd
+  name: zd-mysql-nacos
+data:
+  mysql.host: "www.uetty.com"
+  mysql.port: "8806"
+  mysql.name: "nacos"
+  mysql.user: "uetty"
+  mysql.password: "35#B!!)"
+  
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: zd
+  name: zd-secret
+  
