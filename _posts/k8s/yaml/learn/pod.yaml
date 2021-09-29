@@ -34,8 +34,8 @@ spec:
           #ServiceAccountToken:授权信息
           - secret:
               name: zd-secret
-        
-        
+  securityContext:
+    runAsUser: 1001   
   #镜像列表
   containers:
     - name: tomcat
@@ -45,6 +45,11 @@ spec:
       #IfNotPresent: 已经存在的情况下直接略过拉取镜像的操作
       #Never: 只使用本地镜像，从不拉取
       imagePullPolicy: Always
+      #安全上下文（Security Context）定义 Pod 或 Container 的特权与访问控制设置
+      #自主访问控制:基于 用户 ID（UID）和组 ID（GID）
+      securityContext:
+        runAsNonRoot: false
+        runAsUser: 1001
       #使用数据卷
       volumeMounts:
           #容器内安装数据卷的位置
@@ -67,6 +72,16 @@ spec:
           #秘钥配置
           secretRef:
             name: zd-secret
+      #探针
+      #livenessProbe:指示容器是否正在运行。如果存活态探测失败，则 kubelet 会杀死容器， 并且容器将根据其重启策略决定未来
+      #readinessProbe:指示容器是否准备好为请求提供服务。
+      #startupProbe: 指示容器中的应用是否已经启动。
+  #容器的重启策略
+  #Always: 如果容器停止，总是重新启动容器。
+  #OnFailure: 容器终止运行且退出码不为0时重启
+  #Never : 不论状态为何， kubelet 都不重启该容器
+  restartPolicy: Always 
+        
       
 
 #mysql配置
