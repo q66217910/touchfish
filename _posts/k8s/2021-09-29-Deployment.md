@@ -16,3 +16,13 @@ no-post-nav: true
 2. Deployment 对象的 Replicas 字段的值就是期望状态；
 3.  Deployment 控制器将两个状态做比较，然后根据比较结果，确定是创建 Pod，还是删除已有的 Pod 
 
+
+
+
+
+
+
+### 2. Replicas期望状态的实现（ ReplicaSet ）
+
+Deployment、ReplicaSet 、Pod的关系：
+
