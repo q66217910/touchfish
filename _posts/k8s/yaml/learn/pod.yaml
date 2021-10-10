@@ -22,6 +22,17 @@ spec:
   selector:
     matchLabels:
       app: zd
+  #用于将现有 Pod 替换为新 Pod 的部署策略。
+  strategy:
+    #Recreate:重新创建
+    #RollingUpdate:滚动更新
+    type: RollingUpdate
+    #滚动更新配置参数。 仅当 DeploymentStrategyType = RollingUpdate 时出现。
+    rollingUpdate:
+      #可调度的最大 Pod 数高于所需的 Pod 数
+      maxSurge: 1
+      #更新期间可能不可用的最大 Pod 数。 值可以是绝对数字（例如：5）或所需 Pod 的百分比
+      maxUnavailable: 2
   template:
     spec:
       #挂载数据卷
