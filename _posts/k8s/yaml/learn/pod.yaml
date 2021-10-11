@@ -36,7 +36,6 @@ spec:
   template:
     spec:
       #挂载数据卷
-      #
       volumes:
         - name: zd
           emptyDir: { }
@@ -92,6 +91,9 @@ spec:
           #livenessProbe:指示容器是否正在运行。如果存活态探测失败，则 kubelet 会杀死容器， 并且容器将根据其重启策略决定未来
           #readinessProbe:指示容器是否准备好为请求提供服务。
           #startupProbe: 指示容器中的应用是否已经启动。
+          ports:
+            - containerPort: 80
+              name: tcp
       #容器的重启策略
       #Always: 如果容器停止，总是重新启动容器。
       #OnFailure: 容器终止运行且退出码不为0时重启
@@ -120,4 +122,80 @@ kind: Secret
 metadata:
   namespace: zd
   name: zd-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: zd
+  name: zd-service
+spec:
+  selector:
+    app: zd
+  #ClusterIP(默认): 分配一个集群内部 IP 地址，用于对端点进行负载平衡。
+  #NodePort: 建立在 ClusterIP 之上，并在每个节点上分配一个端口，该端口路由到与 clusterIP 相同的端点。
+  #LoadBalancer: NodePort 上并创建一个外部负载均衡器
+  #ExternalName: 将此服务别名为指定的 externalName。
+  type: NodePort
+  #服务的 IP 地址,通常是随机分配的。 如果一个地址是手动指定的.
+  #type:ExternalName（要求此字段为空）
+  clusterIP: None
+  #此服务公开的端口列表
+  ports:
+      #此服务将公开的端口。
+    - port: 80
+      #此端口的 IP 协议。 支持“TCP”、“UDP”和“SCTP”。 默认为 TCP
+      protocol: TCP
+      #要在服务所针对的 pod 上访问的端口的编号或名称。 号码必须在 1 到 65535 的范围内。名称必须是 IANA SVC NAME
+      targetPort: 80
+      #服务中此端口的名称。 这必须是 DNS_LABEL。 ServiceSpec 中的所有端口都必须具有唯一的名称。
+      #在考虑服务的端点时，这必须与 EndpointPort 中的“名称”字段匹配。 如果仅在此服务上定义了一个 ServicePort，则可选。
+      name: a
+      #当 type 为 NodePort 或 LoadBalancer 时，此服务在其上公开的每个节点上的端口
+      nodePort: 80
+  #用于维护会话亲缘关系。 启用基于客户端 IP 的会话亲缘关系。
+  #ClientIP: 确保每次都将来自特定客户端的连接传递到同一个 Pod
+  #None(默认)
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      #指定ClientIP 类型会话粘滞时间的秒数(当sessionAffinity：ClientIP)
+      timeoutSeconds: 10800
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  namespace: zd
+  name: zd-Endpoints
+subsets:
+  - addresses:
+      # 此端点的 IP。 (127.0.0.0/8)、本地链路 (169.254.0.0/16) 或链路本地组播 ((224.0.0.0/24)。IPv6 也被接受
+      - ip: 127.0.0.1
+        #此端点的主机名
+        hostname: blog.touchfish.com
+        #托管此端点的节点。 这可用于确定节点本地的端点。
+        nodeName: zd
+        #对提供端点的对象的引用。
+        targetRef:
+          #对提供端点的对象的引用
+          name: zd-Endpoints
+          #所指对象的命名空间
+          namespace: zd
+          #所指对象的 API 版本
+          apiVersion: v1
+          kind: Endpoints
+          #进行此引用的特定资源版本
+          resourceVersion: v1
+    ports:
+        #端点的端口号
+      - port: 80
+        #此端口的名称。 这必须与相应 ServicePort 中的“名称”字段匹配。 必须是 DNS_LABEL。 仅当定义了一个端口时才可选。
+        name: a
+        #此端口的 IP 协议。 支持“TCP”、“UDP”和“SCTP”。 默认为 TCP
+        protocol: TCP
+    #提供相关端口但当前未标记为就绪的 IP 地址，因为它们尚未完成启动、最近未通过就绪检查或最近未通过活动检查。
+  - notReadyAddresses:
+      - ip: 127.0.0.1
+
   
