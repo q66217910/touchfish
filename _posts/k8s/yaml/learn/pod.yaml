@@ -132,8 +132,8 @@ metadata:
 spec:
   selector:
     app: zd
-  #ClusterIP(默认): 分配一个集群内部 IP 地址，用于对端点进行负载平衡。
-  #NodePort: 建立在 ClusterIP 之上，并在每个节点上分配一个端口，该端口路由到与 clusterIP 相同的端点。
+  #ClusterIP(默认): 分配一个集群内部 IP 地址，用于对Endpoint进行负载平衡。
+  #NodePort: 建立在 ClusterIP 之上，并在每个节点上分配一个端口，该端口路由到与 clusterIP 相同的Endpoint。
   #LoadBalancer: NodePort 上并创建一个外部负载均衡器
   #ExternalName: 将此服务别名为指定的 externalName。
   type: NodePort
@@ -149,7 +149,7 @@ spec:
       #要在服务所针对的 pod 上访问的端口的编号或名称。 号码必须在 1 到 65535 的范围内。名称必须是 IANA SVC NAME
       targetPort: 80
       #服务中此端口的名称。 这必须是 DNS_LABEL。 ServiceSpec 中的所有端口都必须具有唯一的名称。
-      #在考虑服务的端点时，这必须与 EndpointPort 中的“名称”字段匹配。 如果仅在此服务上定义了一个 ServicePort，则可选。
+      #在考虑服务的Endpoint时，这必须与 EndpointPort 中的“名称”字段匹配。 如果仅在此服务上定义了一个 ServicePort，则可选。
       name: a
       #当 type 为 NodePort 或 LoadBalancer 时，此服务在其上公开的每个节点上的端口
       nodePort: 80
@@ -170,15 +170,15 @@ metadata:
   name: zd-Endpoints
 subsets:
   - addresses:
-      # 此端点的 IP。 (127.0.0.0/8)、本地链路 (169.254.0.0/16) 或链路本地组播 ((224.0.0.0/24)。IPv6 也被接受
+      # 此Endpoint的 IP。 (127.0.0.0/8)、本地链路 (169.254.0.0/16) 或链路本地组播 ((224.0.0.0/24)。IPv6 也被接受
       - ip: 127.0.0.1
-        #此端点的主机名
+        #此Endpoint的主机名
         hostname: blog.touchfish.com
-        #托管此端点的节点。 这可用于确定节点本地的端点。
+        #托管此Endpoint的节点。 这可用于确定节点本地的Endpoint。
         nodeName: zd
-        #对提供端点的对象的引用。
+        #对提供Endpoint的对象的引用。
         targetRef:
-          #对提供端点的对象的引用
+          #对提供Endpoint的对象的引用
           name: zd-Endpoints
           #所指对象的命名空间
           namespace: zd
@@ -188,7 +188,7 @@ subsets:
           #进行此引用的特定资源版本
           resourceVersion: v1
     ports:
-        #端点的端口号
+        #Endpoint的端口号
       - port: 80
         #此端口的名称。 这必须与相应 ServicePort 中的“名称”字段匹配。 必须是 DNS_LABEL。 仅当定义了一个端口时才可选。
         name: a
@@ -198,4 +198,41 @@ subsets:
   - notReadyAddresses:
       - ip: 127.0.0.1
 
-  
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  namespace: zd
+  name: zd-EndpointSlice
+#指定此 EndpointSlice 携带的地址类型。 此切片中的所有地址必须是相同类型。 该字段在创建后是不可变的
+#IPv4: 表示 IPv4 地址
+#IPv6: 代表一个 IPv6 地址
+#FQDN: 代表完全合格的域名
+addressType: IPv4
+endpoints:
+  - addresses:
+      - "127.0.0.1"
+    conditions:
+      #ready: 表示此Endpoint已准备好接收流量，具体取决于管理Endpoint的任何系统。
+      #false: 表示未知状态。 在大多数情况下，消费者应该将此未知状态解释为就绪。
+      ready: true
+      #services 与 ready 相同，除了它的设置与Endpoint的终止状态无关 ,可以使用 EndpointSliceTerminationCondition 功能门启用此字段。
+      #true: 终止正在就绪状态的Endpoint
+      #false: 消费者应遵循就绪条件
+      serving: true
+      #终止指示此Endpoint正在终止
+      #true: 终止指示此Endpoint正在终止
+      terminating: true
+    #此Endpoint的主机名。 Endpoint的消费者可以使用该字段来区分Endpoint
+    hostname: pod-1
+    #表示托管此Endpoint的节点的名称
+    nodeName: node-1
+    #此Endpoint所在的区域的名称
+    zone: us-west2-a
+ports:
+  #Endpoint的端口号
+  - port: 80
+    #此端口的名称。 这必须与相应 ServicePort 中的“名称”字段匹配。 必须是 DNS_LABEL。 仅当定义了一个端口时才可选。
+    name: a
+    #此端口的 IP 协议。 支持“TCP”、“UDP”和“SCTP”。 默认为 TCP
+    protocol: TCP
