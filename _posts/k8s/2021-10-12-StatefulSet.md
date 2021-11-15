@@ -18,3 +18,4 @@ StatefulSet多用于 主从关系、主备关系 。
 
 
 ### 2.StatefulSet 的工作原理 
+

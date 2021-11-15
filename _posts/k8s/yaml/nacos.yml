@@ -134,7 +134,7 @@ spec:
 
 ---
 #Ingress
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nacos-headless
@@ -150,8 +150,8 @@ spec:
         paths:
           - path: /nacos
             backend:
-              serviceName: nacos-headless
-              servicePort: 8848
+              service:
+                name: nacos-headless
   tls:
     - hosts:
         - host.touchfishes.com
