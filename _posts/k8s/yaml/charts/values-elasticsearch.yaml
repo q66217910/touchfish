@@ -1,0 +1,41 @@
+#副本数量
+replicas: 1
+#设置最小使用磁盘
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 5Gi
+#设置es密码
+extraEnvs:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elastic-config-credentials
+        key: ey2021
+esConfig:
+  elasticsearch.yml: |
+    xpack.security.enabled: true
+    path.data: /home/helm/elastic/elasticsearch/data
+    path.logs: /home/helm/elastic/elasticsearch/logs
+
+
+#若需要证书打开下面(protocol/esConfig/secretMounts)配置
+#使用https协议
+#protocol: https
+#es的配置文件，添加证书相关
+#esConfig:
+#  elasticsearch.yml: |
+#    xpack.security.enabled: true
+#    xpack.security.transport.ssl.enabled: true
+#    xpack.security.transport.ssl.verification_mode: certificate
+#    xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+#    xpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+#    xpack.security.http.ssl.enabled: true
+#    xpack.security.http.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+#    xpack.security.http.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+#挂载磁盘，文件目录为证书目录
+#secretMounts:
+#  - name: elastic-certificates
+#    secretName: elastic-certificates
+#    path: /usr/share/elasticsearch/config/certs
