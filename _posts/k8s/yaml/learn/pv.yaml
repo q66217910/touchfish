@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-local
+spec:
+  #数据卷所属的 StorageClass的名称
+  storageClassName: manual
+  #持久卷的资源和容量的描述
+  capacity:
+    storage: 1Gi
+  #Filesystem(default): 创建一个文件夹
+  #Block:
+  volumeMode: Filesystem
+  #安装卷的所有方式
+  #ReadWriteOnce: 被一个节点挂载并且可读写
+  #ReadOnlyMany: 允许被多个节点读
+  #ReadWriteMany: 允许被多个节点读写
+  #ReadWriteOncePod: 只允许被一个pod读写(使用时会确认是哪个pod使用)
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 127.0.0.1
+    path: "/"
+    
+    

@@ -23,6 +23,16 @@ spec:
     matchLabels:
       app: zd
   serviceName: zd
+  volumeClaimTemplates:
+    - metadata:
+        name: zd-pv
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 30Gi
+        storageClassName: manual
+      
   template:
     spec:
       #挂载数据卷

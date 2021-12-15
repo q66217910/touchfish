@@ -149,9 +149,12 @@ spec:
       http:
         paths:
           - path: /nacos
+            pathType: Prefix
             backend:
               service:
                 name: nacos-headless
+                port:
+                  number: 80
   tls:
     - hosts:
         - host.touchfishes.com
