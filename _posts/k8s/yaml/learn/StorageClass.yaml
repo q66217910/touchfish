@@ -1,0 +1,19 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+  annotations:
+    # 设置为default StorageClass
+    storageclass.kubernetes.io/is-default-class: "true"
+#存储卷类型nfs
+#kubernetes.io/gce-pd:Kubernetes 内置的 GCE PD 存储插件
+provisioner: kubernetes.io/no-provisioner
+#pv的回收策略
+#Retain: 保留后端存储，删除 PV/PVC 不会删除对应的后端存储如云盘。
+#Delete：当删除 PVC 时，自动删除 PV 和后端的存储。
+reclaimPolicy: Delete
+#存储卷绑定策略
+#Immediate： 创建 PVC 后立即创建后端存储卷，并且立即绑定新创建的 PV 和 PVC。
+#WaitForFirstConsumer： 当 PVC 被 Pod 使用时，才触发 PV 和后端存储的创建，同时实现 PVC/PV 的绑定
+volumeBindingMode: WaitForFirstConsumer
+
