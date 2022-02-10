@@ -41,6 +41,10 @@ spec:
       annotations:
         pod.alpha.kubernetes.io/initialized: "true"
     spec:
+      initContainers:
+        - name: zd
+          securityContext:
+            
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -119,7 +123,7 @@ metadata:
   name: nacos-headless
   namespace: nacos
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   clusterIP: None
   ports:
     - port: 8848
@@ -131,6 +135,10 @@ spec:
       targetPort: 7848
   selector:
     app: nacos
+status:
+  loadBalancer:
+    ingress:
+      - ip: 192.168.96.1
 
 ---
 #Ingress
@@ -152,6 +160,7 @@ spec:
             backend:
               serviceName: nacos-headless
               servicePort: 8848
+              
   tls:
     - hosts:
         - host.touchfishes.com

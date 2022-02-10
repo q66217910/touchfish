@@ -52,7 +52,10 @@ spec:
               - secret:
                   name: zd-secret
       securityContext:
+        fsGroup: 0
         runAsUser: 1001
+        runAsGroup: 0
+        
       #镜像列表
       containers:
         - name: tomcat
@@ -69,6 +72,9 @@ spec:
             runAsUser: 1001
           #定期探测容器活性。 如果探测失败，容器将重新启动。
           livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
             #启动活动探测之前容器启动后的秒数。
             initialDelaySeconds: 20
             #探测超时后的秒数。 默认为 1 秒。 最小值为 1。
@@ -80,6 +86,9 @@ spec:
             #执行探测的频率（以秒为单位）。 默认为 10 秒。
             periodSeconds: 10
           readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
             #启动活动探测之前容器启动后的秒数。
             initialDelaySeconds: 20
             #探测超时后的秒数。 默认为 1 秒。 最小值为 1。
