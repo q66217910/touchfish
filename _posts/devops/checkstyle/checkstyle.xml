@@ -1,0 +1,435 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+  "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+  "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!-- root module Checker -->
+<module name="Checker">
+  <!-- 
+    https://checkstyle.sourceforge.io/config.html#Checker
+    basedir: 基础路径
+    cacheFile: 缓存有关已检查 OK 的文件的信息； 用于避免重复检查相同的文件
+    localeCountry: 消息的语言环境国家
+    localeLanguage: 消息的语言
+    charset: 文件格式
+    fileExtensions: 接受的文件扩展名
+    severity: 所有违规的默认严重级别
+    haltOnException: 如果单个文件在验证期间产生任何类型的异常，是否停止执行 Checkstyle
+    tabWidth: 制表符 ('\t') 的扩展空格数； 用于在带有标签的文件上打印违规的消息和检查
+  -->
+  <property name="charset" value="UTF-8" />
+  <property name="fileExtensions" value="java, properties, xml ,yaml ,yml" />
+  
+  <module name="SuppressWarningsFilter" />
+  
+  <module name="Header">
+    <!-- 
+      https://checkstyle.sourceforge.io/config_header.html#Header
+      检查文件的头消息
+      headerFile: 指定包含所需标头的文件的名称。
+      charset: 文件格式
+      header: 指定内联指定的所需标头。 单独的标题行必须用字符串“\n”分隔
+      ignoreLines: 指定忽略的行号
+      fileExtensions: 接受的文件扩展名
+    -->
+    <property name="fileExtensions" value="java" />
+  </module>
+
+  <module name="NewlineAtEndOfFile" >
+    <!-- 
+      https://checkstyle.sourceforge.io/config_misc.html#NewlineAtEndOfFile
+      检查文件是否以行分隔符结尾。
+      lineSeparator: 指定分隔符类型  	lf_cr_crlf
+      fileExtensions: 接受的文件扩展名  all files
+    -->
+  </module>
+
+  <module name="FileTabCharacter">
+    <!-- 
+    https://checkstyle.sourceforge.io/config_whitespace.html#FileTabCharacter
+    检查源代码中是否没有制表符 ('\t')。
+    eachLine: 控制是报告包含选项卡的每一行，还是仅报告第一个实例。   false
+    fileExtensions: 接受的文件扩展名  all files
+    -->
+    <property name="eachLine" value="true" />
+  </module>
+
+  <module name="LineLength">
+    <!-- 
+    https://checkstyle.sourceforge.io/config_sizes.html#LineLength
+    检查过长行数
+    max: 最大行数允许
+    ignorePattern: 指定忽略行的正则  "^$"
+    fileExtensions: 接受的文件扩展名  all files
+    -->
+    <property name="max" value="120" />
+    <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://" />
+  </module>
+  
+  <!-- Unmaintainable Javadoc tags -->
+  <module name="RegexpSingleline">
+    <!-- 
+     https://checkstyle.sourceforge.io/config_regexp.html#RegexpSingleline
+    检查指定模式是否匹配任何文件类型中的单行。
+    format: 指定要匹配的正则表达式的格式。
+    message: 指定用于通知违规的消息，如果为空，则使用默认（硬编码）消息。
+    ignoreCase: 是否忽略大小写。  false
+    minimum: 指定每个文件中所需的最小匹配数。
+    maximum: 指定每个文件中所需的最大匹配数。
+    fileExtensions: 接受的文件扩展名  all files
+    -->
+    <property name="format" value="(?:@version|\(non-Javadoc\))" />
+    <property name="ignoreCase" value="true" />
+    <property name="message" value="unmaintainable Javadoc tags: @version or (non-Javadoc)" />
+  </module>
+  <!-- IDE-generated comment -->
+  <module name="RegexpSingleline">
+    <property name="format" value="File \| Settings \| File Templates" />
+    <property name="message" value="IDE-generated comment" />
+  </module>
+  <!-- Trailing spaces -->
+  <module name="RegexpSingleline">
+    <property name="format" value="\s+$" />
+    <property name="message" value="trailing spaces" />
+  </module>
+  <module name="RegexpSingleline">
+    <property name="format" value="org.assertj.core.api.Java6Assertions" />
+    <property name="message"
+              value="Java6Assertions must not be used with Java8. Use org.assertj.core.api.Assertions instead." />
+  </module>
+  <module name="RegexpSingleline">
+    <property name="id" value="AvoidJunit4" />
+    <property name="format" value="org\.junit\.(Test|After|Before|Ignore|Assert)" />
+    <property name="ignoreCase" value="false" />
+    <property name="message" value="Junit4 must not be used. Use Junit5 instead." />
+  </module>
+  <module name="RegexpSingleline">
+    <property name="id" value="AvoidJunitAssertions" />
+    <property name="format" value="org.junit.jupiter.api.Assertions" />
+    <property name="ignoreCase" value="false" />
+    <property name="message" value="Avoid using junit Assertions. Use org.assertj.core.api.Assertions instead." />
+  </module>
+  
+  <!-- Consecutive empty lines -->
+  <module name="RegexpMultiline">
+    <!-- 
+     https://checkstyle.sourceforge.io/config_regexp.html#RegexpMultiline
+    检查指定模式是否在任何文件类型中的多行中匹配。
+    format: 指定要匹配的正则表达式的格式。
+    message: 指定用于通知违规的消息，如果为空，则使用默认（硬编码）消息。
+    ignoreCase: 是否忽略大小写。  false
+    minimum: 指定每个文件中所需的最小匹配数。
+    maximum: 指定每个文件中所需的最大匹配数。
+    fileExtensions: 接受的文件扩展名  all files
+    -->
+    <property name="format" value="[^\r\n](?:\r?\n){3,}" />
+    <property name="message" value="consecutive empty lines" />
+  </module>
+  <!-- Empty lines between two opening braces -->
+  <module name="RegexpMultiline">
+    <property name="format" value="\{(?:\s*\r?\n){2,}\s*\{" />
+    <property name="message" value="empty lines between two opening braces ('{')" />
+  </module>
+  
+<!--  <module name="JavadocPackage" />-->
+  <module name="TreeWalker">
+    <module name="SuppressWarningsHolder" >
+      <!-- 
+      https://checkstyle.sourceforge.io/config_annotation.html#SuppressWarningsHolder
+      维护一组来自 @SuppressWarnings 注释的检查抑制。 它允许防止 Checkstyle 
+      报告带有 @SuppressWarnings 注释的代码部分的违规行为，并使用要排除的检查名称。
+      aliasList: 指定可在代码中使用的检查名称的别名
+      -->
+    </module>
+
+    <module name="AnnotationLocation">
+      <!-- 
+      https://checkstyle.sourceforge.io/config_annotation.html#AnnotationLocation
+      检查语言元素上的注释位置。注释应该位于与目标元素不同的行上。
+      allowSamelineMultipleAnnotations: 允许注释与目标元素位于同一行。  false
+      allowSamelineSingleParameterlessAnnotation: 允许单个无参数注释与目标元素位于同一行。   true
+      allowSamelineParameterizedAnnotation: 允许一个且唯一的参数化注释与目标元素位于同一行。 false
+      tokens: CLASS_DEF , INTERFACE_DEF , PACKAGE_DEF , ENUM_CONSTANT_DEF , ENUM_DEF ,
+              METHOD_DEF , CTOR_DEF , VARIABLE_DEF , ANNOTATION_DEF , ANNOTATION_FIELD_DEF , 
+              RECORD_DEF , COMPACT_CTOR_DEF .
+      -->
+      <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF" />
+    </module>
+    <module name="AnnotationLocation">
+      <property name="tokens" value="VARIABLE_DEF" />
+      <property name="allowSamelineMultipleAnnotations" value="true" />
+    </module>
+    
+    <module name="MissingDeprecated" >
+      <!-- 
+      https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated
+      验证注解@Deprecated 和Javadoc 标记@deprecated 在它们中的任何一个存在时都存在。
+      violateExecutionOnNonTightHtml: 检查检查的Javadoc 违反了在Tight-HTML 规则中定义的严格html 规则，则控制何时打印违规。
+      -->
+    </module>
+
+    <module name="AvoidNestedBlocks">
+      <!-- 
+      https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks
+      查找嵌套块（在代码中自由使用的块）。
+      allowInSwitchCase: 如果嵌套块是 switch case 的唯一子级，则允许嵌套块。  false
+      -->
+      <property name="allowInSwitchCase" value="true" />
+    </module>
+    
+    <module name="EmptyBlock">
+      <!-- 
+     https://checkstyle.sourceforge.io/config_blocks.html#EmptyBlock
+     验证空的代码块
+     option: 指定策略.   statement
+     tokens: LITERAL_WHILE , LITERAL_TRY , LITERAL_FINALLY , LITERAL_DO , 
+             LITERAL_IF , LITERAL_ELSE , LITERAL_FOR ,
+             INSTANCE_INIT , STATIC_INIT , LITERAL_SWITCH , LITERAL_SYNCHRONIZED .
+     -->
+      <property name="option" value="text" />
+    </module>
+    
+    <module name="EmptyCatchBlock">
+      <!-- 
+     https://checkstyle.sourceforge.io/config_blocks.html#EmptyCatchBlock
+     检查空的catch代码块
+     exceptionVariableName: 为与异常关联的变量的名称指定 RegExp。
+     commentFormat: 如果检查符合与指定格式匹配的空 catch 块内的注释 - 空块被抑制。
+     -->
+      <property name="exceptionVariableName" value="expected|ignored|ignore" />
+    </module>
+    
+    <module name="LeftCurly" >
+      <!-- 
+    https://checkstyle.sourceforge.io/config_blocks.html#LeftCurly
+    检查代码块的左花括号 ('{') 的位置。
+    option: 指定放置左花括号 ('{') 的策略。  eol
+    ignoreEnums: 当左大括号策略为 EOL 时，允许忽略枚举。 true
+    tokens: ANNOTATION_DEF , CLASS_DEF , CTOR_DEF , ENUM_CONSTANT_DEF , ENUM_DEF , INTERFACE_DEF , 
+            LAMBDA , LITERAL_CASE , LITERAL_CATCH , LITERAL_DEFAULT , LITERAL_DO , LITERAL_ELSE , 
+            LITERAL_FINALLY , LITERAL_FOR , LITERAL_IF , LITERAL_SWITCH , LITERAL_SYNCHRONIZED , 
+            LITERAL_TRY , LITERAL_WHILE , METHOD_DEF , OBJBLOCK , STATIC_INIT , RECORD_DEF , 
+            COMPACT_CTOR_DEF .
+    -->
+    </module>
+    <module name="NeedBraces" >
+      <!-- 
+     https://checkstyle.sourceforge.io/config_blocks.html#NeedBraces
+     检查代码块周围的大括号。
+     allowSingleLineStatement: 允许没有大括号的单行语句。  false
+     allowEmptyLoopBody: 允许带有空主体的循环。 false
+     tokens: LITERAL_DO , LITERAL_ELSE , LITERAL_FOR , LITERAL_IF , LITERAL_WHILE .
+     -->
+    </module>
+    
+    <module name="RightCurly">
+      <!-- 
+     https://checkstyle.sourceforge.io/config_blocks.html#RightCurly
+     检查代码块周围的大括号。
+     option: 指定放置右花括号 ('}') 的策略。  same
+     tokens: LITERAL_TRY , LITERAL_CATCH , LITERAL_FINALLY , LITERAL_IF , LITERAL_ELSE .
+     -->
+      <property name="id" value="RightCurly1" />
+    </module>
+    <module name="RightCurly">
+      <property name="id" value="RightCurly2" />
+      <property name="option" value="alone_or_singleline" />
+      <property name="tokens"
+                value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT, INSTANCE_INIT" />
+    </module>
+
+    <module name="FinalClass" >
+     <!-- 
+     https://checkstyle.sourceforge.io/config_design.html#FinalClass
+     检查仅具有私有构造函数的类是否声明为 final。
+     -->
+    </module>
+    <module name="HideUtilityClassConstructor" />
+    <module name="OneTopLevelClass" />
+    <module name="VisibilityModifier">
+      <property name="packageAllowed" value="true" />
+    </module>
+
+    <module name="DefaultComesLast" />
+    <module name="EmptyStatement" />
+    <module name="EqualsAvoidNull" />
+    <module name="EqualsHashCode" />
+    <module name="ExplicitInitialization" />
+    <module name="FallThrough" />
+    <module name="IllegalTokenText">
+      <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL" />
+      <property name="format"
+                value="\\u00(08|09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\(0(10|11|12|14|15|42|47)|134)" />
+      <property name="message" value="Avoid using corresponding octal or Unicode escape." />
+    </module>
+    <module name="MultipleVariableDeclarations" />
+    <module name="NoFinalizer" />
+    <module name="OneStatementPerLine" />
+    <module name="OverloadMethodsDeclarationOrder" />
+<!--    <module name="PackageDeclaration" />-->
+    <module name="SimplifyBooleanExpression" />
+    <module name="SimplifyBooleanReturn" />
+    <module name="StringLiteralEquality" />
+
+    <module name="AvoidStarImport" />
+    <module name="RedundantImport" />
+    <module name="UnusedImports" />
+    <!--    <module name="ImportOrder">-->
+    <!--      <property name="groups"-->
+    <!--                value="java,javax,*,cn.swiftpass" />-->
+    <!--      <property name="ordered" value="true" />-->
+    <!--      <property name="separated" value="true" />-->
+    <!--      <property name="option" value="bottom" />-->
+    <!--      <property name="sortStaticImportsAlphabetically" value="true" />-->
+    <!--    </module>-->
+    <module name="AtclauseOrder" />
+    <module name="JavadocType">
+      <property name="scope" value="protected" />
+      <property name="excludeScope" value="package" />
+    </module>
+    <module name="JavadocMethod">
+      <property name="scope" value="protected" />
+      <property name="excludeScope" value="package" />
+      <property name="allowMissingParamTags" value="true" />
+      <property name="allowMissingReturnTag" value="true" />
+      <property name="allowedAnnotations" value="Override, Test" />
+    </module>
+    <!--    <module name="MissingJavadocMethod"/>-->
+    <module name="MissingJavadocMethod">
+      <property name="allowMissingPropertyJavadoc" value="true" />
+      <property name="tokens" value="METHOD_DEF,ANNOTATION_FIELD_DEF" />
+    </module>
+    <module name="MissingJavadocPackage" />
+    <module name="MissingJavadocType" />
+    <module name="JavadocTagContinuationIndentation" />
+    <module name="NonEmptyAtclauseDescription" />
+    <module name="SingleLineJavadoc">
+      <property name="ignoreInlineTags" value="false" />
+    </module>
+    <module name="JavadocStyle">
+      <property name="checkFirstSentence" value="false" />
+      <property name="endOfSentenceFormat" value="([.?!:]|(\u3002)|[ \t\n\r\f&lt;])|([\d\w.?!:]$)" />
+    </module>
+    <module name="SummaryJavadoc">
+      <property name="period" value="" />
+      <property name="forbiddenSummaryFragments"
+                value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )" />
+    </module>
+
+    <module name="ArrayTypeStyle" />
+    <module name="AvoidEscapedUnicodeCharacters">
+      <property name="allowEscapesForControlCharacters" value="true" />
+      <property name="allowByTailComment" value="true" />
+      <property name="allowNonPrintableEscapes" value="true" />
+    </module>
+    <module name="CommentsIndentation" />
+    <!-- Commented out due to known issues:
+         - https://github.com/checkstyle/checkstyle/issues/3182
+         - https://github.com/checkstyle/checkstyle/issues/3273
+    <module name="Indentation">
+      <property name="basicOffset" value="4"/>
+      <property name="braceAdjustment" value="0"/>
+      <property name="caseIndent" value="4"/>
+      <property name="throwsIndent" value="8"/>
+      <property name="lineWrappingIndentation" value="4"/>
+      <property name="arrayInitIndent" value="8"/>
+    </module>
+    -->
+    <module name="OuterTypeFilename" />
+    <!--<module name="UncommentedMain" />-->
+    <module name="UpperEll" />
+
+    <module name="ModifierOrder" />
+    <module name="RedundantModifier" />
+
+    <module name="AbbreviationAsWordInName" />
+    <!--    <module name="ClassTypeParameterName">-->
+    <!--      <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$" />-->
+    <!--      <message key="name.invalidPattern"-->
+    <!--               value="Class type name ''{0}'' must match pattern ''{1}''." />-->
+    <!--    </module>-->
+    <module name="LocalVariableName">
+      <property name="allowOneCharVarInForLoop" value="true" />
+      <message key="name.invalidPattern"
+               value="Local variable name ''{0}'' must match pattern ''{1}''." />
+    </module>
+    <module name="MemberName">
+      <property name="format" value="^[a-z][a-zA-Z0-9]+$" />
+      <message key="name.invalidPattern"
+               value="Member name ''{0}'' must match pattern ''{1}''." />
+    </module>
+    <module name="MethodName">
+      <property name="format" value="^[a-z][a-zA-Z0-9_]+$" />
+      <message key="name.invalidPattern"
+               value="Method name ''{0}'' must match pattern ''{1}''." />
+    </module>
+    <module name="MethodTypeParameterName">
+      <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$" />
+      <message key="name.invalidPattern"
+               value="Method type name ''{0}'' must match pattern ''{1}''." />
+    </module>
+    <module name="ParameterName">
+      <message key="name.invalidPattern"
+               value="Parameter name ''{0}'' must match pattern ''{1}''." />
+    </module>
+    <module name="TypeName">
+      <property name="format" value="^[A-Z][a-zA-Z0-9]+$" />
+      <message key="name.invalidPattern"
+               value="Type name ''{0}'' must match pattern ''{1}''." />
+    </module>
+
+    <!--    <module name="EmptyForIteratorPad" />-->
+    <module name="EmptyLineSeparator">
+      <property name="allowNoEmptyLineBetweenFields" value="true" />
+      <property name="tokens"
+                value="IMPORT, CLASS_DEF, INTERFACE_DEF, ENUM_DEF, INSTANCE_INIT, METHOD_DEF, CTOR_DEF, VARIABLE_DEF" />
+    </module>
+    <module name="GenericWhitespace">
+      <message key="ws.followed"
+               value="GenericWhitespace ''{0}'' is followed by whitespace." />
+      <message key="ws.preceded"
+               value="GenericWhitespace ''{0}'' is preceded with whitespace." />
+      <message key="ws.illegalFollow"
+               value="GenericWhitespace ''{0}'' should followed by whitespace." />
+      <message key="ws.notPreceded"
+               value="GenericWhitespace ''{0}'' is not preceded with whitespace." />
+    </module>
+    <module name="MethodParamPad" />
+    <module name="NoLineWrap" />
+    <module name="NoWhitespaceAfter">
+      <property name="tokens"
+                value="INC, DEC, UNARY_MINUS, UNARY_PLUS, BNOT, LNOT, DOT, ARRAY_DECLARATOR, INDEX_OP" />
+    </module>
+    <module name="NoWhitespaceBefore" />
+    <module name="OperatorWrap">
+      <property name="option" value="eol" />
+      <property name="tokens"
+                value="QUESTION, EQUAL, NOT_EQUAL, DIV, PLUS, MINUS, STAR, MOD, SR, BSR, GE, GT, SL, LE, LT, BXOR, BOR, LOR, BAND, LAND, TYPE_EXTENSION_AND, LITERAL_INSTANCEOF" />
+    </module>
+    <module name="OperatorWrap">
+      <property name="option" value="nl" />
+      <property name="tokens" value="COLON" />
+    </module>
+    <module name="ParenPad" />
+    <module name="SeparatorWrap">
+      <property name="tokens" value="DOT" />
+      <property name="option" value="nl" />
+    </module>
+    <module name="SeparatorWrap">
+      <property name="tokens" value="COMMA" />
+      <property name="option" value="eol" />
+    </module>
+    <module name="WhitespaceAround">
+      <property name="allowEmptyConstructors" value="true" />
+      <property name="allowEmptyLambdas" value="true" />
+      <property name="allowEmptyMethods" value="true" />
+      <property name="allowEmptyTypes" value="true" />
+      <property name="allowEmptyLoops" value="false" />
+      <message key="ws.notFollowed"
+               value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)" />
+      <message key="ws.notPreceded"
+               value="WhitespaceAround: ''{0}'' is not preceded with whitespace." />
+    </module>
+  </module>
+
+</module>
