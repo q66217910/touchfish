@@ -1,0 +1,106 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: backstage.io/User
+spec:
+  #group 是定义的自定义资源的 API 组
+  group: backstage.io
+  names:
+    #复数是要服务的资源的复数名称。the URL: /apis/<group>/<version>/<plural>
+    plural: User
+    kind: User
+  #范围指示定义的自定义资源是集群范围还是命名空间范围。允许的值为Cluster和Namespaced
+  scope: Namespaced
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          required:
+            - spec
+          properties:
+            spec:
+              type: object
+              description: 'spec describes how the user wants the resources to appear'
+              required:
+                - profile
+              properties:
+                profile:
+                  type: object
+                  description: ' userinfo in https://gitlab.swifer.co/ '
+                  required:
+                    - displayName
+                    - email
+                    - picture
+                  properties:
+                    displayName:
+                      type: string
+                      description: 'username'
+                    email:
+                      type: string
+                      description: 'user email'
+                    picture:
+                      type: string
+                      description: 'user image'
+                memberOf:
+                  type: array
+                  description: 'user belong team , can see the GROUP'
+  conversion:
+    strategy: None
+  preserveUnknownFields: false
+
+---
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: backstage.io/System
+spec:
+  #group 是定义的自定义资源的 API 组
+  group: backstage.io
+  names:
+    #复数是要服务的资源的复数名称。the URL: /apis/<group>/<version>/<plural>
+    plural: System
+    kind: System
+  #范围指示定义的自定义资源是集群范围还是命名空间范围。允许的值为Cluster和Namespaced
+  scope: Namespaced
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          required:
+            - spec
+          properties:
+            spec:
+              type: object
+              description: 'spec describes how the user wants the resources to appear'
+              required:
+                - owner
+              properties:
+                owner:
+                  type: string
+                  description: 'An entity reference to the owner of the system '
+                domain:
+                  type: string
+            metadata:
+              type: object
+              description: "Standard object's metadata More info https://gitlab.swifer.co/fbu-open/thirdparty/backstage/-/blob/master/docs/features/software-catalog/descriptor-format.md#common-to-all-kinds-the-envelope "
+              additionalProperties:
+                name:
+                  type: string
+                  description: '<ul><li>Strings of length at least 1, and at most 63</li><li>Must consist of sequences of [a-z0-9A-Z] possibly separated by one of [-_.]</li><ul>'
+                description:
+                  type: string
+                  description: 'System description'
+                tags:
+                  type: array
+                  description: 'system tag'
+                namespace:
+                  type: string
+                title:
+                  type: string
