@@ -78,6 +78,79 @@ Sun/Oracle公司的HotSpot虚拟机，在java运行时按需加载class，在需
 
 
 
+### 5.类加载的双亲委派模型
+
+- 自底向上检查是否加载成功 （custom ClassLoader -> AppClassLoader -> ExtensionClassLoader -> Bootstrap ClassLoader ）
+- 自顶向下尝试加载 
+
+**双亲委派模型：**
+
+​	一个类加载器收到了类加载的请求，首先会委派给父加载器去完成，直到最顶层Bootstrap ClassLoader中开始加载，父类无法找到类时，下一层的类才会尝试自己加载。
+
+**双亲委派模型的优点：**
+
+- 确保安全，防止JDK核心类库被修改
+- 避免重复加载
+- 保证类的唯一性
+
+**如何打破双亲委派模型：**
+
+自定义类加载器，重写loadclass方法
+
+
+
+**双亲委派模型实现**
+
+通过ClassLoader中的**loadClass**方法
+
+1. **loadClass：** 进行类加载
+2. **findClass：** 根据名称加载.class字节码
+3. **definclass:**  把字节码转化为class
+
+```java
+public abstract class ClassLoader {
+	protected Class<?> loadClass(String name, boolean resolve)
+        throws ClassNotFoundException {
+        synchronized (getClassLoadingLock(name)) {
+            //查看class是否已经被加载，若被加载返回类的class，否则为null
+            Class<?> c = findLoadedClass(name);
+            if (c == null) {
+                long t0 = System.nanoTime();
+                try {
+                    //判断是否存在双亲
+                    if (parent != null) {
+                        //委派双亲加载类
+                        c = parent.loadClass(name, false);
+                    } else {
+                        //没有双亲，即Bootstrap加载器
+                        c = findBootstrapClassOrNull(name);
+                    }
+                } catch (ClassNotFoundException e) {
+                   //捕获ClassNotFoundException异常
+                }
+				
+                //如果还为null,即父类没有加载到该类
+                if (c == null) {
+                    long t1 = System.nanoTime();
+                    //尝试自己加载
+                    c = findClass(name);
+
+                    //类加载统计
+                    PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+                    PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+                    PerfCounter.getFindClasses().increment();
+                }
+            }
+            //是否解析类
+            if (resolve) {
+                resolveClass(c);
+            }
+            return c;
+        }
+    }
+}
+```
+
 
 
 ### JVM参数
