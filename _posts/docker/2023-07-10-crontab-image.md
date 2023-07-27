@@ -22,7 +22,7 @@ CMD crond -n -s -x sch
 ## 2.crontab定时任务的添加
 编写crontab文件
 * TZ的作用为设置crontab的时区,与docker镜像设置的时区保持一致
-```crontab
+```shell
 CRON_TZ=Asia/Shanghai
 TZ=Asia/Shanghai
 
