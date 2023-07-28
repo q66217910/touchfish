@@ -163,6 +163,8 @@ APP_MAIN=com.linecorp.centraldogma.server.Main
 * 根据环境变量REPLICA_COUNT指定总集群的节点数
 * 由于在k8s中使用statefulSet部署,根据POD的编号前面加"1"作为当前节点的serverId
 * 替换文件中的占位符内容
+
+
 ```shell
 ###原逻辑
 APP_NAME=centraldogma
