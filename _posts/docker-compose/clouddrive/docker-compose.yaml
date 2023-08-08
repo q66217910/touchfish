@@ -1,0 +1,15 @@
+version: '3.6'
+services:
+  clouddrive:
+    image: cloudnas/clouddrive
+    container_name: clouddrive
+    restart: unless-stopped
+    network_mode: "host"
+    privileged: true
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - /g/19.cloud-diver/shared:/CloudNAS:share
+      - /g/19.cloud-diver/config:/Config
+      - /g/19.cloud-diver/media:/media:share
+    
