@@ -2,7 +2,7 @@
 layout: post
 title: windows使用make构建docker镜像
 category: docker
-tags: [ docker ]
+tags: [docker]
 no-post-nav: true
 ---
 
@@ -42,3 +42,6 @@ push:
 ```
 
 ## 4.执行make文件
+```shell
+make push
+```
