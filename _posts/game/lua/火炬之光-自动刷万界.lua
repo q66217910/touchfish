@@ -1,101 +1,126 @@
 function OnEvent(event, arg)
     OutputLogMessage("event = %s, arg = %s\n", event, arg)
-    if(event == 'MOUSE_BUTTON_PRESSED' and arg==2 ) then
-        -- 1.¿ªÆôµØÍ¼
+    if(event == 'MOUSE_BUTTON_RELEASED' and arg==4 ) then
+        -- 1.å¯åŠ¨åœ°å›¾ï¼Œç§»åŠ¨è¿›åœ°å›¾
         openMap()
-        -- 2.µÈ´ı10s¼ÓÔØÓÎÏ·
+        -- 2.ç­‰å¾…åœ°å›¾åŠ è½½
         Sleep(10*1000)
-        -- 3.ÊÍ·Å¼¼ÄÜ
+        -- 3.é‡Šæ”¾æŠ€èƒ½
         releaseSkill()
-        -- 4.ÏòÇ°ÒÆ¶¯´¥·¢boss
+        -- 4.åœ°å›¾ç§»åŠ¨åˆ°BOSS
         attackBoss()
-        -- 5.µÈ´ıboss±»»÷É±
+        -- 5.ç­‰å¾…å‡»æ€BOSS
         Sleep(60*1000)
-        -- 6.Ê°È¡ÎïÆ·
+        -- 6.æ‹¾å–ç‰©å“
         pickup()
-        -- 7.»Ø³Ç
+        -- 7.å›åŸ
         returnCity()
     end
 end
 
 --[[
-   ¿ªÆôµØÍ¼
+   1.å¯åŠ¨åœ°å›¾ï¼Œç§»åŠ¨è¿›åœ°å›¾
 ]]
 function openMap()
-    -- 1.°´ÏÂD¼ü
-    PressKey('d')
-    if(IsModifierPress('d')) then
-    ReleaseKey('d')
-    end
-    PressAndReleaseKey('d')
-    -- 2.ÒÆ¶¯Êó±êµ½ÖĞĞÄ
+    OutputLogMessage("start open map \n ")
+    -- 1.æŒ‰Dé”®
+    PressAndReleaseKey("d")
+    Sleep(500)
+    -- 2.ç§»åŠ¨å¸¦åœ°å›¾
     MoveMouseTo(31828,39661)
-    -- 3.µã»÷Êó±ê×ó¼ü
-    PressMouseButton(1)
-    if(IsMouseButtonPressed(1)) then
-    ReleaseMouseButton(1)
-    end
+    Sleep(500)
+    -- 3.å·¦é”®åœ°å›¾
+    PressAndReleaseMouseButton(1)
+    Sleep(500)
 
-    -- 4.ÒÆ¶¯µ½È·ÈÏµØÍ¼
-    MoveMouseTo(32033,56060)
-    -- 5.µã»÷Êó±ê×ó¼ü
+    -- 4.ç§»åŠ¨åˆ°ç¡®è®¤
+    MoveMouseTo(31931,60372)
+    Sleep(500)
+    -- 5.ç‚¹å‡»ç¡®è®¤
+    PressAndReleaseMouseButton(1)
+    Sleep(1000)
+
+    OutputLogMessage("end open map \n ")
+
+    -- 6.äººç‰©ç§»åŠ¨
+    MoveMouseTo(37839,27696)
+    Sleep(500)
     PressMouseButton(1)
-    if(IsMouseButtonPressed(1)) then
+    Sleep(100)
     ReleaseMouseButton(1)
-    end
+    Sleep(500)
+
+    -- 7.è¿›å…¥åœ°å›¾
+    PressAndReleaseKey("d")
 end
 
+
+
 --[[
-   ÊÍ·Å¼¼ÄÜ
+   é‡Šæ”¾æŠ€èƒ½
 ]]
 function releaseSkill()
     PressKey('q')
-    if(IsModifierPress('q')) then
+    Sleep(100)
     ReleaseKey('q')
-    end
-    Sleep(1*1000)
+    Sleep(500)
+
     PressKey('q')
-    if(IsModifierPress('q')) then
+    Sleep(100)
     ReleaseKey('q')
-    end
-    Sleep(1*1000)
+    Sleep(500)
+
     PressKey('q')
-    if(IsModifierPress('q')) then
+    Sleep(100)
     ReleaseKey('q')
-    end
-    Sleep(1*1000)
-    if(IsModifierPress('w')) then
+    Sleep(500)
+
+    PressKey('w')
+    Sleep(100)
     ReleaseKey('w')
-    end
-    Sleep(1*1000)
-    if(IsModifierPress('w')) then
+    Sleep(500)
+
+    PressKey('w')
+    Sleep(100)
     ReleaseKey('w')
-    end
-    Sleep(1*1000)
-    if(IsModifierPress('w')) then
+    Sleep(500)
+
+    PressKey('w')
+    Sleep(100)
     ReleaseKey('w')
-    end
+    Sleep(500)
 end
 
 --[[
-ÏòÇ°ÒÆ¶¯´¥·¢boss
+åœ°å›¾ç§»åŠ¨åˆ°BOSSï¼ˆä¸‡ç•Œç‰ˆæœ¬ï¼‰
 ]]
 function attackBoss()
-    -- 1.ÒÆ¶¯Êó±êµ½ÖĞĞÄ
-    MoveMouseTo(32767,32767)
-    -- 2.µã»÷Êó±ê×ó¼ü
+    MoveMouseTo(32989,8078)
+    Sleep(500)
     PressMouseButton(1)
+    Sleep(100)
+    ReleaseMouseButton(1)
 end
 
 --[[
-Ê°È¡ÎïÆ·
+æ‹¾å–ç‰©å“
 ]]
 function pickup()
-
+    for i=0,5,1
+    do
+       PressKey('a')
+       Sleep(100)
+       ReleaseKey('a')
+       Sleep(500)
+    end
 end
 
 --[[
-»Ø³Ç
+å›åŸ
 ]]
 function returnCity()
+    PressKey('d')
+    Sleep(100)
+    ReleaseKey('d')
+    Sleep(500)
 end
