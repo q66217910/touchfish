@@ -17,6 +17,8 @@ function OnEvent(event, arg)
         -- pickup()
         -- 7.回城
         returnCity()
+
+        OutputLogMessage("end this \n ")
     end
 end
 
@@ -29,16 +31,16 @@ function openMap()
     PressAndReleaseKey("d")
     Sleep(500)
     -- 2.选择雷鸣废土
-    move(49348,20468)
+    moveChoose(49348,20468)
 
     -- 3.移动灾厄之林
-    move(14070,32676)
+    moveChoose(14070,32676)
 
     -- 4.点击下一步
-    move(53412,56789)
+    moveChoose(53412,56789)
 
     -- 5.确认地图
-    move(53412,56789)
+    moveChoose(53412,56789)
 
     OutputLogMessage("end open map \n ")
 
@@ -143,12 +145,32 @@ function returnCity()
     Sleep(100)
     ReleaseKey('t')
 
-    Sleep(2500)
+    Sleep(5000)
 
     PressKey('d')
     Sleep(100)
     ReleaseKey('d')
     Sleep(500)
+
+    Sleep(5000)
+
+    OutputLogMessage("start next  \n ")
+
+    move(45113, 17006)
+    Sleep(1000)
+    move(45181, 17857)
+end
+
+--[[
+移动
+]]
+function moveChoose(x,y)
+	MoveMouseTo(x,y)
+    Sleep(500)
+    PressMouseButton(1)
+    Sleep(100)
+    ReleaseMouseButton(1)
+    Sleep(1000)
 end
 
 --[[
@@ -160,5 +182,5 @@ function move(x,y)
     PressMouseButton(1)
     Sleep(100)
     ReleaseMouseButton(1)
-    Sleep(1000)
+    Sleep(500)
 end
