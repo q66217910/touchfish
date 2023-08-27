@@ -1,20 +1,32 @@
+-- 循环刷图次数
+CIRCULATE_COUNT=1
+-- 回响个数
+MAP_DIFFICULTY=1
+-- 职业（1.召唤/2.炮宾）
+CAREER=1
+-- 地图（1.沸涌炎海-风鸣峡谷/100.沸涌炎海-监视者）
+MAP=1
+-- 移动速度
+SPEED_MOVE=106
+
 function OnEvent(event, arg)
     OutputLogMessage("event = %s, arg = %s\n", event, arg)
      if(event == 'MOUSE_BUTTON_RELEASED' and arg==5 ) then
                 x, y = GetMousePosition();
                 OutputLogMessage("Mouse is at %d, %d\n", x, y);
+                AbortMacro();
      end
     if(event == 'MOUSE_BUTTON_RELEASED' and arg==4 ) then
-       for i=0,600,1
+       for i=1,CIRCULATE_COUNT,1
        do
-       autoCarry()
+       autoCarry(i)
        end
     end
 end
 
-function autoCarry()
+function autoCarry(count)
 	-- 1.启动地图，移动进地图
-    openMap()
+    openMap(2)
     -- 2.等待地图加载
     Sleep(5*1000)
     -- 3.释放技能
@@ -33,6 +45,33 @@ end
    释放技能
 ]]
 function releaseSkill()
+    if  (CAREER==1) then
+        summoner()
+    else if(CAREER==2) then
+        bim()
+      end
+    end
+end
+
+--[[
+  炮宾
+]]
+function bim()
+  PressKey('r')
+  Sleep(100)
+  ReleaseKey('r')
+  PressKey('w')
+  Sleep(100)
+  ReleaseKey('w')
+  PressKey('q')
+  Sleep(100)
+  ReleaseKey('q')
+end
+
+--[[
+ 召唤技能(注意施法CD)
+]]
+function summoner()
     PressKey('q')
     Sleep(100)
     ReleaseKey('q')
@@ -105,20 +144,33 @@ end
 移动
 ]]
 function moveChoose(x,y)
-	MoveMouseTo(x,y)
+    MoveMouseTo(x,y)
     Sleep(500)
     PressMouseButton(1)
     Sleep(100)
     ReleaseMouseButton(1)
-    Sleep(2000)
+    Sleep(1000)
+end
+
+--[[
+  攻击
+]]
+function attack()
+  if(CAREER==1) then
+    -- 召唤只需要移动就可以了
+  else if (CAREER==2) then
+         bim()
+       end
+  end
 end
 
 --[[
 移动
 ]]
 function move(x,y)
+    attack()
     Sleep(200)
-	MoveMouseTo(x,y)
+    MoveMouseTo(x,y)
     PressMouseButton(1)
     Sleep(100)
     ReleaseMouseButton(1)
@@ -126,32 +178,46 @@ function move(x,y)
     PressKey('a')
     Sleep(100)
     ReleaseKey('a')
-    Sleep(400)
+
+    speedWait()
+end
+
+function speedWait()
+	if(SPEED_MOVE>100) then
+	 Sleep(500)
+	 else if(SPEED_MOVE>50) then
+	        Sleep(1000)
+        end
+    end
 end
 
 --[[
    1.启动地图，移动进地图
+   mapState: 1：正常地图 2:Boss
 ]]
-function openMap()
+function openMap(mapState)
     OutputLogMessage("start open map \n ")
     -- 1.按D键
     PressAndReleaseKey("d")
     Sleep(500)
-    -- 2.选择雷鸣废土
-    moveChoose(16631,15306)
 
-    -- 3.移动凤鸣峡谷
-    moveChoose(51465,32130)
+    -- 2.选择地图
+   chooseMap()
 
-    -- 4.点击下一步
-    moveChoose(53412,56789)
+    if (mapState==1) then
+	    -- 3.点击下一步
+        moveChoose(53412,56789)
 
-    --加回想a
-    moveChoose(8743,52355)
-    moveChoose(8743,52355)
+        --4.加回想
+        mapDifficulty()
 
-    -- 5.确认地图
-    moveChoose(53412,56789)
+        -- 5.确认地图
+        moveChoose(53412,56789)
+    elseif (mapState==2) then
+        -- 确认boss
+        moveChoose(33229, 60737)
+    end
+
 
     OutputLogMessage("end open map \n ")
 
@@ -168,9 +234,55 @@ function openMap()
 end
 
 --[[
-地图移动到BOSS（万界版本）
+  添加回响
 ]]
-function attackBoss()
+function mapDifficulty()
+  for i=1,MAP_DIFFICULTY,1
+  do
+     moveChoose(8743,52355)
+  end
+end
+
+--[[
+ 选择地图
+]]
+function chooseMap()
+   if(MAP==1) then
+      --沸涌炎海-风鸣峡谷
+      fengMingCanyonOpen()
+   else if(MAP==100) then
+      --沸涌炎海-监视者
+      feiYongYanHai()
+       end
+   end
+end
+
+--[[
+    打开-沸涌炎海-监视者
+]]
+function feiYongYanHai()
+    -- 1.选择沸涌炎海
+    moveChoose(16631,15306)
+
+    -- 2.选择监视者
+    moveChoose(37122, 17371)
+end
+
+--[[
+  打开-沸涌炎海-风鸣峡谷
+]]
+function fengMingCanyonOpen()
+    -- 1.选择沸涌炎海
+    moveChoose(16631,15306)
+
+    -- 2.移动凤鸣峡谷
+    moveChoose(51465,32130)
+end
+
+--[[
+  沸涌炎海-风鸣峡谷
+]]
+function fengMingCanyonMove()
     move(42620, 20225)
     move(45045, 25084)
     move(44293, 25752)
@@ -245,6 +357,17 @@ function attackBoss()
     move(43849, 15913)
     move(42313, 17857)
     move(42313, 17857)
-	move(42313, 17857)
+    move(42313, 17857)
     move(29233, 17249)
+end
+
+--[[
+地图移动到BOSS（万界版本）
+]]
+function attackBoss()
+    if(MAP==1) then
+       fengMingCanyonMove()
+    elseif (MAP==100) then
+
+    end
 end
