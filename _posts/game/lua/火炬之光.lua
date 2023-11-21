@@ -1,13 +1,15 @@
--- Ñ­»·Ë¢Í¼´ÎÊı
-CIRCULATE_COUNT=1
--- »ØÏì¸öÊı
-MAP_DIFFICULTY=1
--- Ö°Òµ£¨1.ÕÙ»½/2.ÅÚ±ö£©
-CAREER=1
--- µØÍ¼£¨1.·ĞÓ¿Ñ×º£-·çÃùÏ¿¹È/100.·ĞÓ¿Ñ×º£-¼àÊÓÕß£©
-MAP=1
--- ÒÆ¶¯ËÙ¶È
-SPEED_MOVE=106
+-- å¾ªç¯åˆ·å›¾æ¬¡æ•°
+CIRCULATE_COUNT=27
+-- å›å“ä¸ªæ•°
+MAP_DIFFICULTY=2
+-- èŒä¸šï¼ˆ1.å¬å”¤/2.ç‚®å®¾/3.é­”çµï¼‰
+CAREER=3
+-- åœ°å›¾ï¼ˆ1.æ²¸æ¶Œç‚æµ·-é£é¸£å³¡è°·/100.æ²¸æ¶Œç‚æµ·-ç›‘è§†è€…/2.å†°å°å¯’æ¸Š-é¾™çœ é«˜åŸ/200.å†°å°å¯’æ¸Š-ç›‘è§†è€…/3.é’¢é“ç‚¼é•œ-é—è½è¡—å··ï¼‰
+MAP=2
+-- ç§»åŠ¨é€Ÿåº¦
+SPEED_MOVE=101
+-- å¯åŠ¨
+START=1
 
 function OnEvent(event, arg)
     OutputLogMessage("event = %s, arg = %s\n", event, arg)
@@ -15,46 +17,67 @@ function OnEvent(event, arg)
                 x, y = GetMousePosition();
                 OutputLogMessage("Mouse is at %d, %d\n", x, y);
                 AbortMacro();
+                PressMouseButton(1)
+                Sleep(100)
+                ReleaseMouseButton(1)
      end
     if(event == 'MOUSE_BUTTON_RELEASED' and arg==4 ) then
-       for i=1,CIRCULATE_COUNT,1
-       do
-       autoCarry(i)
-       end
+            local i = 1
+            repeat
+	            autoCarry(i)
+	            i = i+1
+            until (event == "MOUSE_BUTTON_RELEASED" and arg == 5 or   i > CIRCULATE_COUNT )
     end
 end
 
 function autoCarry(count)
-	-- 1.Æô¶¯µØÍ¼£¬ÒÆ¶¯½øµØÍ¼
-    openMap(2)
-    -- 2.µÈ´ıµØÍ¼¼ÓÔØ
+    --æ¯8æ¬¡æ‰“ä¸€æ¬¡boss
+    map=MAP
+    state = count % 9 >0 and  1 or 2
+    if (state==2) then
+	  -- bosså›¾
+	  map=map*100
+    end
+	-- 1.å¯åŠ¨åœ°å›¾ï¼Œç§»åŠ¨è¿›åœ°å›¾
+    openMap(map,state)
+    -- 2.ç­‰å¾…åœ°å›¾åŠ è½½
     Sleep(5*1000)
-    -- 3.ÊÍ·Å¼¼ÄÜ
+    -- 3.é‡Šæ”¾æŠ€èƒ½
     releaseSkill()
-    -- 4.µØÍ¼ÒÆ¶¯µ½BOSS
-    attackBoss()
-    -- 6.Ê°È¡ÎïÆ·
+    -- 4.åœ°å›¾ç§»åŠ¨åˆ°BOSS
+    attackBoss(map)
+    -- 6.æ‹¾å–ç‰©å“
     pickup()
-    -- 7.»Ø³Ç
+    -- 7.å›åŸ
     returnCity()
 
     OutputLogMessage("end this \n ")
 end
 
 --[[
-   ÊÍ·Å¼¼ÄÜ
+   é‡Šæ”¾æŠ€èƒ½
 ]]
 function releaseSkill()
     if  (CAREER==1) then
         summoner()
-    else if(CAREER==2) then
+    elseif(CAREER==2) then
         bim()
-      end
+    elseif(CAREER==3) then
+        moling()
     end
 end
 
 --[[
-  ÅÚ±ö
+    é­”çµ
+]]
+function moling()
+	PressKey('e')
+    Sleep(100)
+    ReleaseKey('e')
+end
+
+--[[
+  ç‚®å®¾
 ]]
 function bim()
   PressKey('r')
@@ -69,43 +92,28 @@ function bim()
 end
 
 --[[
- ÕÙ»½¼¼ÄÜ(×¢ÒâÊ©·¨CD)
+ å¬å”¤æŠ€èƒ½(æ³¨æ„æ–½æ³•CD)
 ]]
 function summoner()
-    PressKey('q')
+    PressMouseButton(2)
     Sleep(100)
-    ReleaseKey('q')
+    ReleaseMouseButton(2)
     Sleep(500)
 
-    PressKey('q')
+    PressMouseButton(2)
     Sleep(100)
-    ReleaseKey('q')
+    ReleaseMouseButton(2)
     Sleep(500)
 
-    PressKey('q')
+    PressMouseButton(2)
     Sleep(100)
-    ReleaseKey('q')
-    Sleep(500)
-
-    PressKey('w')
-    Sleep(100)
-    ReleaseKey('w')
-    Sleep(500)
-
-    PressKey('w')
-    Sleep(100)
-    ReleaseKey('w')
-    Sleep(500)
-
-    PressKey('w')
-    Sleep(100)
-    ReleaseKey('w')
+    ReleaseMouseButton(2)
     Sleep(500)
 end
 
 
 --[[
-Ê°È¡ÎïÆ·
+æ‹¾å–ç‰©å“
 ]]
 function pickup()
     for i=0,5,1
@@ -117,7 +125,7 @@ function pickup()
 end
 
 --[[
-»Ø³Ç
+å›åŸ
 ]]
 function returnCity()
     PressKey('t')
@@ -141,7 +149,7 @@ function returnCity()
 end
 
 --[[
-ÒÆ¶¯
+ç§»åŠ¨
 ]]
 function moveChoose(x,y)
     MoveMouseTo(x,y)
@@ -153,19 +161,20 @@ function moveChoose(x,y)
 end
 
 --[[
-  ¹¥»÷
+  æ”»å‡»
 ]]
 function attack()
   if(CAREER==1) then
-    -- ÕÙ»½Ö»ĞèÒªÒÆ¶¯¾Í¿ÉÒÔÁË
-  else if (CAREER==2) then
+    -- å¬å”¤åªéœ€è¦ç§»åŠ¨å°±å¯ä»¥äº†
+  elseif (CAREER==2) then
          bim()
-       end
+  elseif (CAREER==3) then
+        moling()
   end
 end
 
 --[[
-ÒÆ¶¯
+ç§»åŠ¨
 ]]
 function move(x,y)
     attack()
@@ -186,55 +195,58 @@ function speedWait()
 	if(SPEED_MOVE>100) then
 	 Sleep(500)
 	 else if(SPEED_MOVE>50) then
-	        Sleep(1000)
+	        Sleep(1500)
         end
     end
 end
 
 --[[
-   1.Æô¶¯µØÍ¼£¬ÒÆ¶¯½øµØÍ¼
-   mapState: 1£ºÕı³£µØÍ¼ 2:Boss
+   1.å¯åŠ¨åœ°å›¾ï¼Œç§»åŠ¨è¿›åœ°å›¾
+   map: åœ°å›¾ç¼–å·
+   mapState: 1ï¼šæ­£å¸¸åœ°å›¾ 2:Boss
 ]]
-function openMap(mapState)
+function openMap(map,mapState)
     OutputLogMessage("start open map \n ")
-    -- 1.°´D¼ü
+    -- 1.æŒ‰Dé”®
     PressAndReleaseKey("d")
     Sleep(500)
 
-    -- 2.Ñ¡ÔñµØÍ¼
-   chooseMap()
+    -- 2.é€‰æ‹©åœ°å›¾
+   chooseMap(map)
 
     if (mapState==1) then
-	    -- 3.µã»÷ÏÂÒ»²½
+	    -- 3.ç‚¹å‡»ä¸‹ä¸€æ­¥
         moveChoose(53412,56789)
 
-        --4.¼Ó»ØÏë
+        --4.åŠ å›æƒ³
         mapDifficulty()
 
-        -- 5.È·ÈÏµØÍ¼
-        moveChoose(53412,56789)
+        -- 5.ç¡®è®¤åœ°å›¾
+        moveChoose(54504, 57761)
     elseif (mapState==2) then
-        -- È·ÈÏboss
+        -- ç¡®è®¤boss
         moveChoose(33229, 60737)
     end
 
 
     OutputLogMessage("end open map \n ")
 
-    -- 6.ÈËÎïÒÆ¶¯
-    MoveMouseTo(37839,27696)
+    Sleep(2000)
+
+    -- 6.äººç‰©ç§»åŠ¨
+    MoveMouseTo(41527, 19739)
     Sleep(500)
     PressMouseButton(1)
     Sleep(100)
     ReleaseMouseButton(1)
     Sleep(500)
 
-    -- 7.½øÈëµØÍ¼
+    -- 7.è¿›å…¥åœ°å›¾
     PressAndReleaseKey("d")
 end
 
 --[[
-  Ìí¼Ó»ØÏì
+  æ·»åŠ å›å“
 ]]
 function mapDifficulty()
   for i=1,MAP_DIFFICULTY,1
@@ -244,43 +256,161 @@ function mapDifficulty()
 end
 
 --[[
- Ñ¡ÔñµØÍ¼
+ é€‰æ‹©åœ°å›¾
 ]]
-function chooseMap()
-   if(MAP==1) then
-      --·ĞÓ¿Ñ×º£-·çÃùÏ¿¹È
+function chooseMap(map)
+   if(map==1)
+   then
+      --æ²¸æ¶Œç‚æµ·-é£é¸£å³¡è°·
       fengMingCanyonOpen()
-   else if(MAP==100) then
-      --·ĞÓ¿Ñ×º£-¼àÊÓÕß
+   elseif(map==100)
+   then
+      --æ²¸æ¶Œç‚æµ·-ç›‘è§†è€…
       feiYongYanHai()
-       end
+   elseif(map==2)
+   then
+       --å†°å°å¯’æ¸Š-é¾™çœ é«˜åŸ
+       longMianGaoYuan()
+   elseif(map==200) then
+       --å†°å°å¯’æ¸Š-ç›‘è§†è€…
+       bingfenghanyuan()
+   elseif(map==3) then
+      --é’¢é“ç‚¼é•œ-é—è½è¡—å··
+        yiloujiexiang()
    end
 end
 
 --[[
-    ´ò¿ª-·ĞÓ¿Ñ×º£-¼àÊÓÕß
+    æ‰“å¼€-é’¢é“ç‚¼é•œ-é—è½è¡—å··
+]]
+function yiloujiexiang()
+    -- 1.é€‰æ‹©é’¢é“ç‚¼é•œ
+	moveChoose(33433, 11176)
+	-- 2.ç§»åŠ¨é—è½è¡—å··
+	moveChoose(41664, 36260)
+end
+
+--[[
+    æ‰“å¼€-å†°å°å¯’æ¸Š-é¾™çœ é«˜åŸ
+]]
+function longMianGaoYuan()
+    -- 1.é€‰æ‹©å†°å°å¯’æ¸Š
+    moveChoose(11406, 49926)
+
+    -- 2.ç§»åŠ¨é¾™çœ é«˜åŸ
+    moveChoose(28891, 34681)
+end
+
+--[[
+    æ‰“å¼€-å†°å°å¯’æ¸Š-ç›‘è§†è€…
+]]
+function bingfenghanyuan()
+    -- 1.é€‰æ‹©å†°å°å¯’æ¸Š
+    moveChoose(11406, 49926)
+
+    -- 2.é€‰æ‹©ç›‘è§†è€…
+    moveChoose(31555, 18768)
+end
+
+--[[
+    æ‰“å¼€-æ²¸æ¶Œç‚æµ·-ç›‘è§†è€…
 ]]
 function feiYongYanHai()
-    -- 1.Ñ¡Ôñ·ĞÓ¿Ñ×º£
+    -- 1.é€‰æ‹©æ²¸æ¶Œç‚æµ·
     moveChoose(16631,15306)
 
-    -- 2.Ñ¡Ôñ¼àÊÓÕß
+    -- 2.é€‰æ‹©ç›‘è§†è€…
     moveChoose(37122, 17371)
 end
 
 --[[
-  ´ò¿ª-·ĞÓ¿Ñ×º£-·çÃùÏ¿¹È
+  æ‰“å¼€-æ²¸æ¶Œç‚æµ·-é£é¸£å³¡è°·
 ]]
 function fengMingCanyonOpen()
-    -- 1.Ñ¡Ôñ·ĞÓ¿Ñ×º£
+    -- 1.é€‰æ‹©æ²¸æ¶Œç‚æµ·
     moveChoose(16631,15306)
 
-    -- 2.ÒÆ¶¯·ïÃùÏ¿¹È
+    -- 2.ç§»åŠ¨å‡¤é¸£å³¡è°·
     moveChoose(51465,32130)
 end
 
+function yiloujiexiangMove()
+	move(23393, 19193)
+    move(21276, 46403)
+    move(22334, 45856)
+    move(18715, 42151)
+    move(18919, 23991)
+    move(17280, 14759)
+    move(16734, 47921)
+    move(18783, 42516)
+    move(19090, 49015)
+    move(24315, 51626)
+    move(18817, 47982)
+    move(16187, 46767)
+    move(22915, 38750)
+    move(19329, 10022)
+    move(19739, 20468)
+    move(24930, 21379)
+    move(21993, 21683)
+    move(22403, 20954)
+    move(25647, 21683)
+    move(16290, 40876)
+    move(18646, 25509)
+    move(23154, 19132)
+    move(21549, 17978)
+    move(23086, 15549)
+    move(21583, 15063)
+    move(20900, 18646)
+    move(19944, 12937)
+    move(20285, 22290)
+    move(19910, 12512)
+    move(21515, 23687)
+    move(18407, 45006)
+    move(19807, 52355)
+    move(27764, 53084)
+    move(27799, 51140)
+    move(19739, 46707)
+    move(15095, 34316)
+end
+
 --[[
-  ·ĞÓ¿Ñ×º£-·çÃùÏ¿¹È
+    å†°å°å¯’æ¸Š-é¾™çœ é«˜åŸ
+]]
+function longMianGaoYuanMove()
+	move(49894, 13058)
+    move(46479, 18768)
+    move(46411, 20225)
+    move(46411, 20225)
+    move(46957, 19193)
+    move(52319, 32798)
+    move(51977, 19679)
+    move(52011, 19679)
+    move(52319, 23687)
+    move(51602, 16885)
+    move(43679, 12269)
+    move(43405, 12451)
+    move(41288, 12633)
+    move(42859, 14273)
+    move(45386, 17492)
+    move(49621, 26542)
+    move(50748, 37960)
+    move(49382, 44216)
+    move(47128, 48164)
+    move(46820, 47253)
+    move(46342, 45613)
+    move(50850, 45856)
+    move(43201, 51019)
+    move(52387, 40876)
+    move(54573, 33162)
+    move(49587, 17614)
+    move(43713, 16946)
+    move(42927, 17553)
+    Sleep(3000)
+   -- move(53821, 42819)
+end
+
+--[[
+  æ²¸æ¶Œç‚æµ·-é£é¸£å³¡è°·
 ]]
 function fengMingCanyonMove()
     move(42620, 20225)
@@ -361,13 +491,26 @@ function fengMingCanyonMove()
     move(29233, 17249)
 end
 
---[[
-µØÍ¼ÒÆ¶¯µ½BOSS£¨Íò½ç°æ±¾£©
-]]
-function attackBoss()
-    if(MAP==1) then
-       fengMingCanyonMove()
-    elseif (MAP==100) then
+function bingfenghanyuanMove()
+    move(33536, 4920)
+    move(32989, 23323)
+    Sleep(13000)
+    move(32887, 25267)
+end
 
-    end
+--[[
+åœ°å›¾ç§»åŠ¨åˆ°BOSSï¼ˆä¸‡ç•Œç‰ˆæœ¬ï¼‰
+]]
+function attackBoss(map)
+    if(map==1) then
+       fengMingCanyonMove()
+    elseif (map==100) then
+      fengMingCanyonMove()
+    elseif (map==2) then
+      longMianGaoYuanMove()
+	elseif (map==200) then
+	  bingfenghanyuanMove()
+	elseif (map==3) then
+	  yiloujiexiangMove()
+	end
 end
