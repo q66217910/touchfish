@@ -136,10 +136,32 @@ java -jar /var/atlassian/atlassian-agent.jar -d -m test@test.com -n BAT -p 'conf
 将生成的license替换`confluence.cfg.xml`中`atlassian.license.message`即可
 
 
-### 2.版本升级路径
+### 5.版本升级路径
 
 由于升级过程需要不断的更新数据库表结构,所以需要按照指定升级路径进行升级
 
 ```
-7.4.10 -> 7.9.3 -> 7.14.4
+7.4.10 -> 7.9.3 -> 7.14.4 -> 8.3.2 -> 8.6.1
 ```
+
+
+# 四.插件安装
+
+### 1.插件下载
+
+官方插件下载地址： https://marketplace.atlassian.com/
+
+### 2.安装插件
+
+`站点管理` -> `查找新应用` -> 选择应用 -> `安装`或者`免费试用`
+
+### 3.破解
+
+应用秘钥在管理应用中点击应用详情可以获取
+
+执行
+```shell
+java -jar /var/atlassian/atlassian-agent.jar -d -m test@test.com -n BAT -p ${应用密钥} -o http://localhost:8090 -s ${confluence.setup.server.id}
+```
+
+将生成的license贴入并点击更新
