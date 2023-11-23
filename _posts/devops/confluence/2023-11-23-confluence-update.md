@@ -115,11 +115,11 @@ source confluence-$(date +%Y%m%d).sql
 
 ```
 
-### 3.修改数据库
+### 2.修改数据库
 
 将`confluence.cfg.xml`中`hibernate.connection.url`的数据库替换为我们新的数据库
 
-### 4.license处理
+### 3.license处理
 
 升级过程中可能会导致原license不可用,需要进行重新破解
 
@@ -136,7 +136,7 @@ java -jar /var/atlassian/atlassian-agent.jar -d -m test@test.com -n BAT -p 'conf
 将生成的license替换`confluence.cfg.xml`中`atlassian.license.message`即可
 
 
-### 5.版本升级路径
+### 4.版本升级路径
 
 由于升级过程需要不断的更新数据库表结构,所以需要按照指定升级路径进行升级
 
