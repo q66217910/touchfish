@@ -26,7 +26,7 @@ https://github.com/spinnaker/orca
 
 ## 4.spin-cloudDriver(云资源管理)
 
-cloudDriver是Spinnaker的云驱动，负责云资源的管理。
+CloudDriver负责所有对云提供商的变化调用，以及索引/缓存所有已部署的资源。
 
 https://github.com/spinnaker/clouddriver
 
