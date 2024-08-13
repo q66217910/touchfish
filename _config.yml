@@ -141,6 +141,15 @@ navs:
         subLabel: 容器
       - subHref: /k8s.html
         subLabel: 容器编排K8S
+
+  - href: /ai.html
+    label: 人工智能
+    target: _self
+    subnav:
+      - subHref: /ai.html
+        subLabel: AI知识
+      - subHref: /ai_install.html
+        subLabel: 大模型搭建
         
   - href: /leetcode.html
     label: leetcode
