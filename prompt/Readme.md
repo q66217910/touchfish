@@ -20,4 +20,6 @@ ChatGPT 的训练语料库中该类型的材料更多一些.
 
 * Workflow: 重点中的重点, 你希望 Prompt 按什么方式来对话和输出
 
+* Examples: 在该结构块举 1-3 个示例, 从而进一步提升 Prompt 带来的输出结果提升.
+
 * Initialization: 冷启动时的对白, 也是一个强调需注意重点的机会
