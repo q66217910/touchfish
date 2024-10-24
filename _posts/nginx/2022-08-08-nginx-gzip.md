@@ -1,3 +1,11 @@
+---
+layout: post
+title: nginx gzip模块
+category: nginx
+tags: [life]
+no-post-nav: true
+---
+
 # nginx gzip模块
 
 ### 一.[配置](https://nginx.org/en/docs/http/ngx_http_gzip_module.html#example)

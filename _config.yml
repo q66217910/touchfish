@@ -117,6 +117,9 @@ navs:
       - subHref: /zookeeper.html
         subLabel: zookeeper
 
+      - subHref: /nginx.html
+        subLabel: NGINX
+
   -
     href: /java.html
     label: JAVA
