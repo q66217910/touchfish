@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Jenkins镜像制作
+title: Jenkins(一)镜像制作
 category: jenkins
 tags: [life]
 no-post-nav: true
@@ -9,11 +9,9 @@ no-post-nav: true
 Jenkins镜像制作
 ===
 
-## 一. 镜像制作
+## 一. 主（master）节点镜像制作
 
-### 1-1. 主（master）节点镜像制作
-
-#### 常用的插件以及适配的版本
+### 1-1. 常用的插件以及适配的版本
 
 plugins.txt文件内容
 
@@ -187,7 +185,7 @@ workflow-support: 920.v59f71ce16f04
 ws-cleanup: 0.46
 ```
 
-#### 主节点镜像Dockerfile
+### 1-2. 主节点镜像Dockerfile
 
 使用官方镜像 **jenkins/jenkins:lts-jdk17**,最新稳定版本
 
@@ -198,9 +196,9 @@ COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN jenkins-plugin-cli --latest true --plugin-file /usr/share/jenkins/ref/plugins.txt
 ```
 
-### 1-2. 从节点制作
+## 二. 从节点制作
 
-#### 自定义settings.xml
+### 2-1. 自定义settings.xml
 
 若是没有自定义的仓库，可以使用下面这份阿里云仓库源的配置
 
@@ -270,7 +268,7 @@ RUN jenkins-plugin-cli --latest true --plugin-file /usr/share/jenkins/ref/plugin
 ```
 
 
-#### 从节点镜像Dockerfile
+### 2-2. 从节点镜像Dockerfile
 
 * 使用官方镜像 **jenkins/inbound-agent**
 * 安装环境
@@ -294,27 +292,4 @@ RUN mkdir -p /opt/maven/apache-maven-3.9.9 && cd /opt/maven/apache-maven-3.9.9 &
 USER jenkins
 
 ADD conf/settings.xml /home/jenkins/.m2/settings.xml
-```
-
-## 二. 启动服务
-
-### 启动主节点
-
-```yaml
-version: '3.3'
-
-services:
-  jenkins:
-    container_name: jenkins-master
-    build: ./container
-    ports:
-      - '8080:8080'
-      - '50000:50000'
-    env_file:
-      - ../conf/config.env
-      - ../conf/common.env
-    volumes:
-      - ./data/agent:/var/jenkins_home
-      - ./data/workspace:/home/jenkins/workspace
-      - ./init.groovy.d:/usr/share/jenkins/ref/init.groovy.d
 ```
