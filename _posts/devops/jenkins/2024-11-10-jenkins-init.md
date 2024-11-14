@@ -1,29 +1,29 @@
 ---
 layout: post
-title: Jenkins(Èı)³õÊ¼»¯½Å±¾
+title: Jenkins(ä¸‰)åˆå§‹åŒ–è„šæœ¬
 category: jenkins
 tags: [life]
 no-post-nav: true
 ---
 
-## ³õÊ¼»¯½Å±¾
+## åˆå§‹åŒ–è„šæœ¬
 
-ÔÚjenkinsÆô¶¯¹ı³ÌÖĞ,ÎÒÃÇÏ£ÍûËûÄÜ¹»×Ô¶¯ÅäÖÃÒ»Ğ©ĞÅÏ¢,¿ÉÒÔ±ÜÃâÎÒÃÇºóĞøÊÖ¶¯ÅäÖÃ,×öµ½Õû¸öjenkins¿ªÏä¼´ÓÃ
+åœ¨jenkinså¯åŠ¨è¿‡ç¨‹ä¸­,æˆ‘ä»¬å¸Œæœ›ä»–èƒ½å¤Ÿè‡ªåŠ¨é…ç½®ä¸€äº›ä¿¡æ¯,å¯ä»¥é¿å…æˆ‘ä»¬åç»­æ‰‹åŠ¨é…ç½®,åšåˆ°æ•´ä¸ªjenkinså¼€ç®±å³ç”¨
 
-### 1. Ä¬ÈÏÉèÖÃadminÕËºÅ
+### 1. é»˜è®¤è®¾ç½®adminè´¦å·
 
 ```groovy
 #!/usr/bin/env groovy
 import jenkins.model.*
 import hudson.security.*
 
-//Ä¬ÈÏÉèÖÃadminÕËºÅ
+//é»˜è®¤è®¾ç½®adminè´¦å·
 def instance = Jenkins.getInstance()
 
 def admin = System.getenv('ADMIN_USER')
 def password = System.getenv('ADMIN_PASSWORD')
 
-println "==============´´½¨adminÓÃ»§¿ªÊ¼========================"
+println "==============åˆ›å»ºadminç”¨æˆ·å¼€å§‹========================"
 
 def hudsonRealm = new HudsonPrivateSecurityRealm(false) as java.lang.Object
 hudsonRealm.createAccount(admin,password)
@@ -34,10 +34,10 @@ instance.setAuthorizationStrategy(strategy)
 
 instance.save()
 
-println "==============´´½¨adminÓÃ»§½áÊø========================"
+println "==============åˆ›å»ºadminç”¨æˆ·ç»“æŸ========================"
 ```
 
-### 2. ¶¨Òå»·¾³±äÁ¿
+### 2. å®šä¹‰ç¯å¢ƒå˜é‡
 
 ```groovy
 #!/usr/bin/env groovy
@@ -50,10 +50,10 @@ def instance = Jenkins.getInstance()
 def DOCKER_REGISTRY_URL = System.getenv('DOCKER_REGISTRY_URL')
 def DOCKER_REPOSITORY_URL = System.getenv('DOCKER_REPOSITORY_URL')
 
-println "==============´´½¨»·¾³±äÁ¿========================"
+println "==============åˆ›å»ºç¯å¢ƒå˜é‡========================"
 
 
-// »ñÈ¡»ò´´½¨Ò»¸öEnvironmentVariablesNodePropertyÊµÀı
+// è·å–æˆ–åˆ›å»ºä¸€ä¸ªEnvironmentVariablesNodePropertyå®ä¾‹
 def properties = instance.getGlobalNodeProperties();
 def envVarsProp = properties.get(EnvironmentVariablesNodeProperty)
 
@@ -61,7 +61,7 @@ if (envVarsProp == null) {
     envVarsProp = new EnvironmentVariablesNodeProperty()
 }
 
-// Ìí¼ÓĞÂµÄ»·¾³±äÁ¿µ½ÊôĞÔÁĞ±í
+// æ·»åŠ æ–°çš„ç¯å¢ƒå˜é‡åˆ°å±æ€§åˆ—è¡¨
 envVarsProp.getEnvVars().put("DEV_IN_BANK", "true")
 if (DOCKER_REGISTRY_URL != null && DOCKER_REPOSITORY_URL != null) {
     envVarsProp.getEnvVars().put("DOCKER_PREFIX", DOCKER_REGISTRY_URL + "/" + DOCKER_REPOSITORY_URL)
@@ -73,10 +73,10 @@ properties.add(envVarsProp)
 
 instance.save()
 
-println "==============´´½¨»·¾³±äÁ¿½áÊø========================"
+println "==============åˆ›å»ºç¯å¢ƒå˜é‡ç»“æŸ========================"
 ```
 
-### 3. ´´½¨GitlabÈÏÖ¤ĞÅÏ¢
+### 3. åˆ›å»ºGitlabè®¤è¯ä¿¡æ¯
 
 ```groovy
 import jenkins.*
@@ -93,7 +93,7 @@ credentialDescription="builder user for gitlab"
 credentialUser=System.getenv('BUILDER_USER')
 credentialPassword=System.getenv('BUILDER_PASSWORD')
 
-println "==============´´½¨gitlabÖ¤Êé¿ªÊ¼========================"
+println "==============åˆ›å»ºgitlabè¯ä¹¦å¼€å§‹========================"
 
 def instance = Jenkins.getInstance()
 
@@ -110,10 +110,10 @@ credentials = new UsernamePasswordCredentialsImpl(
 credentials_store.addCredentials(global_domain, credentials)
 
 
-println "==============´´½¨gitlabÖ¤Êé½áÊø========================"
+println "==============åˆ›å»ºgitlabè¯ä¹¦ç»“æŸ========================"
 ```
 
-### 4. Ìí¼ÓJDK¹¤¾ß
+### 4. æ·»åŠ JDKå·¥å…·
 
 ```groovy
 import jenkins.*
@@ -121,7 +121,7 @@ import jenkins.model.*
 import hudson.*
 import hudson.model.*
 
-println "==============°²×°JDK¹¤¾ß¿ªÊ¼========================"
+println "==============å®‰è£…JDKå·¥å…·å¼€å§‹========================"
 
 def instance = Jenkins.getInstance()
 def jdkTool = instance.getDescriptor("hudson.model.JDK")
@@ -133,10 +133,10 @@ def openjdk17 = new JDK("jdk17", "/opt/java/openjdk") as java.lang.Object;
 jdkTool.setInstallations(oracleJdk8,openjdk17,openJdk11)
 jdkTool.save()
 
-println "==============°²×°JDK¹¤¾ß½áÊø========================"
+println "==============å®‰è£…JDKå·¥å…·ç»“æŸ========================"
 ```
 
-### 5. Ìí¼Ómaven¹¤¾ß
+### 5. æ·»åŠ mavenå·¥å…·
 
 ```groovy
 import jenkins.*
@@ -144,7 +144,7 @@ import jenkins.model.*
 import hudson.*
 import hudson.model.*
 
-println "==============°²×°MAVEN¹¤¾ß¿ªÊ¼========================"
+println "==============å®‰è£…MAVENå·¥å…·å¼€å§‹========================"
 
 def instance = Jenkins.getInstance()
 def mavenTool = instance.getDescriptor("hudson.tasks.Maven")
@@ -152,12 +152,12 @@ def maven3 = new hudson.tasks.Maven.MavenInstallation("maven3", "/opt/maven/apac
 mavenTool.installations += maven3
 mavenTool.save()
 
-println "==============°²×°MAVEN¹¤¾ß½áÊø========================"
+println "==============å®‰è£…MAVENå·¥å…·ç»“æŸ========================"
 
 
 ```
 
-### 6. Ìí¼Ó×Ó½Úµã
+### 6. æ·»åŠ å­èŠ‚ç‚¹
 
 ```groovy
 import jenkins.*
@@ -170,37 +170,37 @@ import hudson.util.*
 
 nodeNum = Integer.parseInt(System.getenv('NODE_NUM'))
 
-println "==============ĞÂ½¨×Ó½Úµã¿ªÊ¼========================"
+println "==============æ–°å»ºå­èŠ‚ç‚¹å¼€å§‹========================"
 
 def instance = Jenkins.getInstance()
 
 for (i = 1; i < nodeNum + 1; i++) {
-    // ÅäÖÃ´úÀí½ÚµãµÄ²ÎÊı
+    // é…ç½®ä»£ç†èŠ‚ç‚¹çš„å‚æ•°
     def nodeParams = [
             name             : "node${i}",
-            remoteFS         : '/home/jenkins/workspace', // ´úÀí½ÚµãÉÏµÄ¹¤×÷¿Õ¼äÂ·¾¶
-            labels           : 'maven', // Îª½Úµã·ÖÅäµÄ±êÇ©
+            remoteFS         : '/home/jenkins/workspace', // ä»£ç†èŠ‚ç‚¹ä¸Šçš„å·¥ä½œç©ºé—´è·¯å¾„
+            labels           : 'maven', // ä¸ºèŠ‚ç‚¹åˆ†é…çš„æ ‡ç­¾
             mode             : Node.Mode.NORMAL,
-            retentionStrategy: RetentionStrategy.Always.INSTANCE, // ±£Áô²ßÂÔ£¬ÕâÀïÊ¼ÖÕ±£Áô
-            numExecutors     : "4", // ½ÚµãÉÏ¿ÉÓÃµÄÖ´ĞĞÆ÷ÊıÁ¿
+            retentionStrategy: RetentionStrategy.Always.INSTANCE, // ä¿ç•™ç­–ç•¥ï¼Œè¿™é‡Œå§‹ç»ˆä¿ç•™
+            numExecutors     : "4", // èŠ‚ç‚¹ä¸Šå¯ç”¨çš„æ‰§è¡Œå™¨æ•°é‡
     ] as java.lang.Object
 
-    // ÅäÖÃJNLPÁ¬½Ó·½Ê½
+    // é…ç½®JNLPè¿æ¥æ–¹å¼
     def jnlpLauncher = new JNLPLauncher("") as java.lang.Object
 
-    // ´´½¨½Úµã
+    // åˆ›å»ºèŠ‚ç‚¹
     def slave = new DumbSlave(nodeParams.name.toString(), nodeParams.name.toString(), nodeParams.remoteFS, nodeParams.numExecutors, nodeParams.mode, nodeParams.labels, jnlpLauncher, nodeParams.retentionStrategy) as java.lang.Object
     instance.addNode(slave)
 
-    // ±£´æÅäÖÃ
+    // ä¿å­˜é…ç½®
     instance.save()
 }
 
 
-println "==============ĞÂ½¨×Ó½Úµã½áÊø========================"
+println "==============æ–°å»ºå­èŠ‚ç‚¹ç»“æŸ========================"
 ```
 
-### 7. ¹²Ïílibrary
+### 7. å…±äº«library
 
 ```groovy
 import jenkins.*
@@ -213,33 +213,33 @@ import jenkins.plugins.git.GitSCMSource
 sharedLibraryRepo=System.getenv('SHARED_LIBRARY_REPO')
 String credentialsId = "gitlab-builder"
 
-println "==============ÉèÖÃ¹²Ïí²Ö¿â¿ªÊ¼========================"
+println "==============è®¾ç½®å…±äº«ä»“åº“å¼€å§‹========================"
 
 def instance = Jenkins.getInstance()
 
-// È·±£ Jenkins ÊµÀı´¦ÓÚËø¶¨×´Ì¬£¬ÒÔ±ã°²È«µØ½øĞĞÅäÖÃĞŞ¸Ä
+// ç¡®ä¿ Jenkins å®ä¾‹å¤„äºé”å®šçŠ¶æ€ï¼Œä»¥ä¾¿å®‰å…¨åœ°è¿›è¡Œé…ç½®ä¿®æ”¹
 instance.setQuietPeriod(0)
 instance.save()
 
-// ´´½¨»ò¸üĞÂÈ«¾ÖµÄ¹²Ïí¿âÅäÖÃ
+// åˆ›å»ºæˆ–æ›´æ–°å…¨å±€çš„å…±äº«åº“é…ç½®
 def libConfig = new LibraryConfiguration("spLibrary", new SCMSourceRetriever(new GitSCMSource(null, sharedLibraryRepo, credentialsId, "*", "", false))) as java.lang.Object
 libConfig.setDefaultVersion("master")
 
-// È«¾Ö±äÁ¿ÖĞÌí¼Ó»ò¸üĞÂ¹²Ïí¿âÅäÖÃ
+// å…¨å±€å˜é‡ä¸­æ·»åŠ æˆ–æ›´æ–°å…±äº«åº“é…ç½®
 def globalLibraries = GlobalLibraries.get()
 globalLibraries.setLibraries([libConfig])
 globalLibraries.save()
 
-println "==============¹²Ïí²Ö¿âÉèÖÃ³É¹¦: mySharedLibrary========================"
+println "==============å…±äº«ä»“åº“è®¾ç½®æˆåŠŸ: mySharedLibrary========================"
 
-// ÖØÖÃJenkinsÊµÀıµÄ°²¾²ÆÚ
+// é‡ç½®Jenkinså®ä¾‹çš„å®‰é™æœŸ
 instance.setQuietPeriod(5)
 instance.save()
 
-println "==============ÉèÖÃ¹²Ïí²Ö¿â½áÊø========================"
+println "==============è®¾ç½®å…±äº«ä»“åº“ç»“æŸ========================"
 ```
 
-### 8.×Ô¶¯´´½¨¶à·ÖÖ§Á÷Ë®Ïß
+### 8.è‡ªåŠ¨åˆ›å»ºå¤šåˆ†æ”¯æµæ°´çº¿
 
 ```groovy
 #!/usr/bin/env groovy
@@ -262,7 +262,7 @@ import com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy
 def initMultibranchPipelineStr = System.getenv('INIT_MULTIBRANCH_PIPELINE')
 List<String> gitRepos = initMultibranchPipelineStr?.split(',')
 
-println "==============ĞÂ½¨Á÷Ë®Ïß¿ªÊ¼========================"
+println "==============æ–°å»ºæµæ°´çº¿å¼€å§‹========================"
 
 gitRepos.forEach { gitRepo ->
     try{
@@ -272,7 +272,7 @@ gitRepos.forEach { gitRepo ->
         String credentialsId = "gitlab-builder"
         String jobScript = "Jenkinsfile"
 
-        println "==============ĞÂ½¨Á÷Ë®Ïß${jobName}========================"
+        println "==============æ–°å»ºæµæ°´çº¿${jobName}========================"
 
         // Create MultiBranch pipeline
         Jenkins jenkins = Jenkins.instance
@@ -289,20 +289,20 @@ gitRepos.forEach { gitRepo ->
         GitSCMSource gitSCMSource = new GitSCMSource(id, remote, credentialsId, includes, excludes, ignoreOnPushNotifications)
         BranchSource branchSource = new BranchSource(gitSCMSource)
 
-        //ÇåÀíÅäÖÃ
+        //æ¸…ç†é…ç½®
         CleanBeforeCheckout cleanCheckout = new CleanBeforeCheckout()
         cleanCheckout.setDeleteUntrackedNestedRepositories(true)
         CleanBeforeCheckoutTrait cleanBeforeCheckoutTrait = new CleanBeforeCheckoutTrait(cleanCheckout)
         BranchDiscoveryTrait branchDiscoveryTrait =  new BranchDiscoveryTrait()
 
-        //ÉèÖÃÅäÖÃ
+        //è®¾ç½®é…ç½®
         gitSCMSource.setTraits([branchDiscoveryTrait,cleanBeforeCheckoutTrait])
 
         PersistedList sources = mbp.getSourcesList()
         sources.clear()
         sources.add(branchSource)
 
-        //ÉèÖÃ¹ıÆÚÊ±¼ä
+        //è®¾ç½®è¿‡æœŸæ—¶é—´
         mbp.setOrphanedItemStrategy(new DefaultOrphanedItemStrategy(true,30,10))
 
         // Trigger initial build (scan)
@@ -310,15 +310,15 @@ gitRepos.forEach { gitRepo ->
 
         jenkins.save()
 
-        println "==============ĞÂ½¨Á÷Ë®Ïß${jobName}³É¹¦========================"
+        println "==============æ–°å»ºæµæ°´çº¿${jobName}æˆåŠŸ========================"
     }catch (Exception e){
-        println "==============ĞÂ½¨Á÷Ë®Ïß${jobName}Ê§°Ü========================"
+        println "==============æ–°å»ºæµæ°´çº¿${jobName}å¤±è´¥========================"
         println e.getMessage()
     }
 
 }
 
-println "==============ĞÂ½¨Á÷Ë®ÏßÍê³É========================"
+println "==============æ–°å»ºæµæ°´çº¿å®Œæˆ========================"
 
 
 ```

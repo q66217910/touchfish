@@ -1,14 +1,14 @@
 ---
 layout: post
-title: Jenkins(¶ş)·şÎñÆô¶¯
+title: Jenkins(äºŒ)æœåŠ¡å¯åŠ¨
 category: jenkins
 tags: [life]
 no-post-nav: true
 ---
 
-## Ò». ¶¨Òå»·¾³±äÁ¿common.env
+## ä¸€. å®šä¹‰ç¯å¢ƒå˜é‡common.env
 
-common.env£º ¶¨ÒåÁËÖ÷½ÚµãºÍ´Ó½Úµã¶¼»áÊ¹ÓÃµ½µÄ»·¾³±äÁ¿£¨±ÈÈç×Ö·û¼¯£©
+common.envï¼š å®šä¹‰äº†ä¸»èŠ‚ç‚¹å’Œä»èŠ‚ç‚¹éƒ½ä¼šä½¿ç”¨åˆ°çš„ç¯å¢ƒå˜é‡ï¼ˆæ¯”å¦‚å­—ç¬¦é›†ï¼‰
 
 ```text
 LC_ALL=C.UTF-8
@@ -16,14 +16,14 @@ LANG=C.UTF-8
 JAVA_TOOL_OPTIONS="-Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8"
 ```
 
-## ¶ş. Æô¶¯Ö÷½Úµã
+## äºŒ. å¯åŠ¨ä¸»èŠ‚ç‚¹
 
-* common.env£º ¶¨ÒåÁËÖ÷½ÚµãºÍ´Ó½Úµã¶¼»áÊ¹ÓÃµ½µÄ»·¾³±äÁ¿£¨±ÈÈç×Ö·û¼¯£©
-* config.env£º Ö÷½Úµã×Ô¶¨Òå»·¾³±äÁ¿
-* ¹ÒÔØÄ¿Â¼/var/jenkins_home£º jenkinsµÄÖ÷Ä¿Â¼,´æ´¢ÁËjenkinsµÄÏà¹ØĞÅÏ¢
-* ¹ÒÔØÄ¿Â¼/home/jenkins/workspace£º Ö´ĞĞÈÎÎñµÄ¹¤×÷Ä¿Â¼
-* ¹ÒÔØÄ¿Â¼/usr/share/jenkins/ref/init.groovy.d£º ³õÊ¼»¯½Å±¾£¬ÓÃÓÚºóĞø³õÊ¼»¯ÄÚÈİ£¬ÏÂÃæÕÂ½Ú½éÉÜ
-* ¼àÌı8080/50000¶Ë¿Ú
+* common.envï¼š å®šä¹‰äº†ä¸»èŠ‚ç‚¹å’Œä»èŠ‚ç‚¹éƒ½ä¼šä½¿ç”¨åˆ°çš„ç¯å¢ƒå˜é‡ï¼ˆæ¯”å¦‚å­—ç¬¦é›†ï¼‰
+* config.envï¼š ä¸»èŠ‚ç‚¹è‡ªå®šä¹‰ç¯å¢ƒå˜é‡
+* æŒ‚è½½ç›®å½•/var/jenkins_homeï¼š jenkinsçš„ä¸»ç›®å½•,å­˜å‚¨äº†jenkinsçš„ç›¸å…³ä¿¡æ¯
+* æŒ‚è½½ç›®å½•/home/jenkins/workspaceï¼š æ‰§è¡Œä»»åŠ¡çš„å·¥ä½œç›®å½•
+* æŒ‚è½½ç›®å½•/usr/share/jenkins/ref/init.groovy.dï¼š åˆå§‹åŒ–è„šæœ¬ï¼Œç”¨äºåç»­åˆå§‹åŒ–å†…å®¹ï¼Œä¸‹é¢ç« èŠ‚ä»‹ç»
+* ç›‘å¬8080/50000ç«¯å£
 
 ```yaml
 version: '3.3'
@@ -46,11 +46,11 @@ services:
       - ./init.groovy.d:/usr/share/jenkins/ref/init.groovy.d
 ```
 
-## Èı. Æô¶¯´Ó½Úµã
+## ä¸‰. å¯åŠ¨ä»èŠ‚ç‚¹
 
-* JENKINS_SECRET: Ô¶³ÌÁ¬½ÓµÄsshÃÜÔ¿£¨ÖµÎªmaster½Úµã´´½¨µÄnode½ÚµãÊ±Éú³ÉµÄ£©
-* JENKINS_AGENT_NAME£º ½ÚµãÃû³Æ
-* ¹ÒÔØÄ¿Â¼/home/jenkins/workspace£º Ö´ĞĞÈÎÎñ¹ı³ÌµÄ¹¤×÷¿Õ¼ä
+* JENKINS_SECRET: è¿œç¨‹è¿æ¥çš„sshå¯†é’¥ï¼ˆå€¼ä¸ºmasterèŠ‚ç‚¹åˆ›å»ºçš„nodeèŠ‚ç‚¹æ—¶ç”Ÿæˆçš„ï¼‰
+* JENKINS_AGENT_NAMEï¼š èŠ‚ç‚¹åç§°
+* æŒ‚è½½ç›®å½•/home/jenkins/workspaceï¼š æ‰§è¡Œä»»åŠ¡è¿‡ç¨‹çš„å·¥ä½œç©ºé—´
 
 ```yaml
 version: '3.3'
