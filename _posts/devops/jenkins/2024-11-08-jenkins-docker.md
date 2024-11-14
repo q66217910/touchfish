@@ -1,0 +1,320 @@
+---
+layout: post
+title: Jenkins镜像制作
+category: jenkins
+tags: [life]
+no-post-nav: true
+---
+
+Jenkins镜像制作
+===
+
+## 一. 镜像制作
+
+### 1-1. 主（master）节点镜像制作
+
+#### 常用的插件以及适配的版本
+
+plugins.txt文件内容
+
+```text
+Parameterized-Remote-Trigger: 3.2.0
+ant: 511.v0a_a_1a_334f41b_
+antisamy-markup-formatter: 162.v0e6ec0fcfcf6
+apache-httpcomponents-client-4-api: 4.5.14-208.v438351942757
+apache-httpcomponents-client-5-api: 5.3.1-110.v77252fb_d4da_5
+artifactory: 4.0.8
+asm-api: 9.7-33.v4d23ef79fcc8
+authentication-tokens: 1.119.v50285141b_7e1
+authorize-project: 1.7.2
+blueocean-autofavorite: 1.2.5
+blueocean-bitbucket-pipeline: 1.27.14
+blueocean-commons: 1.27.14
+blueocean-config: 1.27.14
+blueocean-core-js: 1.27.14
+blueocean-dashboard: 1.27.14
+blueocean-display-url: 2.4.3
+blueocean-events: 1.27.14
+blueocean-git-pipeline: 1.27.14
+blueocean-github-pipeline: 1.27.14
+blueocean-i18n: 1.27.14
+blueocean-jwt: 1.27.14
+blueocean-personalization: 1.27.14
+blueocean-pipeline-api-impl: 1.27.14
+blueocean-pipeline-editor: 1.27.14
+blueocean-pipeline-scm-api: 1.27.14
+blueocean-rest-impl: 1.27.14
+blueocean-rest: 1.27.14
+blueocean-web: 1.27.14
+blueocean: 1.27.14
+bootstrap5-api: 5.3.3-1
+bouncycastle-api: 2.30.1.78.1-248.ve27176eb_46cb_
+branch-api: 2.1178.v969d9eb_c728e
+build-timeout: 1.33
+build-user-vars-plugin: 166.v52976843b_435
+caffeine-api: 3.1.8-133.v17b_1ff2e0599
+checks-api: 2.2.0
+cloud-stats: 336.v788e4055508b_
+cloudbees-bitbucket-branch-source: 888.v8e6d479a_1730
+cloudbees-folder: 6.942.vb_43318a_156b_2
+command-launcher: 115.vd8b_301cc15d0
+commons-compress-api: 1.26.1-2
+commons-httpclient3-api: 3.1-3
+commons-lang3-api: 3.14.0-76.vda_5591261cfe
+commons-text-api: 1.12.0-129.v99a_50df237f7
+conditional-buildstep: 1.4.3
+config-file-provider: 973.vb_a_80ecb_9a_4d0
+configuration-as-code: 1836.vccda_4a_122a_a_e
+credentials-binding: 681.vf91669a_32e45
+credentials: 1371.vfee6b_095f0a_3
+data-tables-api: 2.0.8-1
+dependency-check-jenkins-plugin: 5.5.1
+display-url-api: 2.204.vf6fddd8a_8b_e9
+docker-commons: 443.v921729d5611d
+docker-java-api: 3.3.6-90.ve7c5c7535ddd
+docker-plugin: 1.6.2
+docker-workflow: 580.vc0c340686b_54
+durable-task: 568.v8fb_5c57e8417
+echarts-api: 5.5.0-1
+eddsa-api: 0.3.0-4.v84c6f0f4969e
+email-ext: 1814.v404722f34263
+favorite: 2.221.v19ca_666b_62f5
+font-awesome-api: 6.5.2-1
+generic-webhook-trigger: 2.2.2
+git-client: 5.0.0
+git-parameter: 0.9.19
+git-server: 126.v0d945d8d2b_39
+git: 5.3.0
+github-api: 1.321-468.v6a_9f5f2d5a_7e
+github-branch-source: 1793.v1831e9c68d77
+github: 1.40.0
+gitlab-api: 5.6.0-97.v6603a_83f8690
+gitlab-branch-source: 704.vc7f1202d7e14
+gitlab-oauth: 1.19
+gitlab-plugin: 1.8.1
+gradle: 2.12
+gson-api: 2.11.0-41.v019fcf6125dc
+h2-api: 11.1.4.199-30.v1c64e772f3a_c
+handy-uri-templates-2-api: 2.1.8-30.v7e777411b_148
+htmlpublisher: 1.36
+instance-identity: 185.v303dc7c645f9
+ionicons-api: 74.v93d5eb_813d5f
+jackson2-api: 2.17.0-379.v02de8ec9f64c
+jakarta-activation-api: 2.1.3-1
+jakarta-mail-api: 2.1.3-1
+javadoc: 280.v050b_5c849f69
+javax-activation-api: 1.2.0-7
+javax-mail-api: 1.6.2-10
+jaxb: 2.3.9-1
+jdk-tool: 80.v8a_dee33ed6f0
+jenkins-design-language: 1.27.14
+jersey2-api: 2.44-151.v6df377fff741
+jjwt-api: 0.11.5-112.ve82dfb_224b_a_d
+jnr-posix-api: 3.1.19-2
+joda-time-api: 2.12.7-29.v5a_b_e3a_82269a_
+jquery: 1.12.4-1
+jquery3-api: 3.7.1-2
+jsch: 0.2.16-86.v42e010d9484b_
+json-api: 20240303-41.v94e11e6de726
+json-path-api: 2.9.0-58.v62e3e85b_a_655
+junit: 1284.vf75d778f98c5
+ldap: 725.v3cb_b_711b_1a_ef
+localization-support: 1.2
+localization-zh-cn: 371.v23851f835d6b_
+lockable-resources: 1255.vf48745da_35d0
+mailer: 472.vf7c289a_4b_420
+matrix-auth: 3.2.2
+matrix-project: 832.va_66e270d2946
+maven-plugin: 3.23
+metrics: 4.2.21-451.vd51df8df52ec
+mina-sshd-api-common: 2.13.1-117.v2f1a_b_66ff91d
+mina-sshd-api-core: 2.13.1-117.v2f1a_b_66ff91d
+msbuild: 1.34
+okhttp-api: 4.11.0-172.vda_da_1feeb_c6e
+opentelemetry-api: 1.40.0-24.v83ee9a_c6e8d9
+opentelemetry: 3.1320.v2eededb_d909e
+pam-auth: 1.11
+parameterized-trigger: 806.vf6fff3e28c3e
+pipeline-build-step: 540.vb_e8849e1a_b_d8
+pipeline-github-lib: 61.v629f2cc41d83
+pipeline-graph-analysis: 216.vfd8b_ece330ca_
+pipeline-groovy-lib: 730.ve57b_34648c63
+pipeline-input-step: 495.ve9c153f6067b_
+pipeline-maven-api: 1421.v610fa_b_e2d60e
+pipeline-maven: 1421.v610fa_b_e2d60e
+pipeline-milestone-step: 119.vdfdc43fc3b_9a_
+pipeline-model-api: 2.2205.vc9522a_9d5711
+pipeline-model-definition: 2.2205.vc9522a_9d5711
+pipeline-model-extensions: 2.2205.vc9522a_9d5711
+pipeline-rest-api: 2.34
+pipeline-stage-step: 312.v8cd10304c27a_
+pipeline-stage-tags-metadata: 2.2205.vc9522a_9d5711
+pipeline-stage-view: 2.34
+pipeline-utility-steps: 2.17.0
+plain-credentials: 183.va_de8f1dd5a_2b_
+plugin-util-api: 4.1.0
+prism-api: 1.29.0-15
+prometheus: 780.v7c50a_d288424
+publish-over-ssh: 1.25
+publish-over: 0.22
+pubsub-light: 1.18
+resource-disposer: 0.23
+run-condition: 1.7
+scm-api: 696.v778d637b_a_762
+script-security: 1341.va_2819b_414686
+snakeyaml-api: 2.2-121.v5a_68b_9300b_d4
+sonar: 2.17.2
+sse-gateway: 1.27
+ssh-credentials: 343.v884f71d78167
+ssh-slaves: 2.973.v0fa_8c0dea_f9f
+ssh-steps: 2.0.68.va_d21a_12a_6476
+sshd: 3.330.vc866a_8389b_58
+structs: 338.v848422169819
+timestamper: 1.27
+token-macro: 400.v35420b_922dcb_
+trilead-api: 2.147.vb_73cc728a_32e
+variant: 60.v7290fc0eb_b_cd
+workflow-aggregator: 600.vb_57cdd26fdd7
+workflow-api: 1332.vc21122317a_8e
+workflow-basic-steps: 1058.vcb_fc1e3a_21a_9
+workflow-cps: 3922.va_f73b_7c4246b_
+workflow-durable-task-step: 1364.v2fd76fb_6fd41
+workflow-job: 1436.vfa_244484591f
+workflow-multibranch: 795.ve0cb_1f45ca_9a_
+workflow-scm-step: 427.v4ca_6512e7df1
+workflow-step-api: 678.v3ee58b_469476
+workflow-support: 920.v59f71ce16f04
+ws-cleanup: 0.46
+```
+
+#### 主节点镜像Dockerfile
+
+使用官方镜像 **jenkins/jenkins:lts-jdk17**,最新稳定版本
+
+```Dockerfile
+FROM jenkins/jenkins:lts-jdk17
+## 安装插件
+COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN jenkins-plugin-cli --latest true --plugin-file /usr/share/jenkins/ref/plugins.txt
+```
+
+### 1-2. 从节点制作
+
+#### 自定义settings.xml
+
+若是没有自定义的仓库，可以使用下面这份阿里云仓库源的配置
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <!--本地仓库。该值表示构建系统本地仓库的路径。其默认值为${user.home}/.m2/repository。  -->
+    <localRepository>D:\Maven\repository</localRepository>
+    <!--配置服务端的一些设置。如果局域网内部有nexus,需要管理项目jar包可配置 -->  
+    <servers>
+    </servers>
+    <!--为仓库列表配置的下载镜像列表-->  
+    <mirrors>
+        <!--给定仓库的下载镜像-->  
+        <mirror>
+            <id>aliyun</id>
+            <mirrorOf>central</mirrorOf>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </mirror>
+    </mirrors>
+    <!-- 仓库配置 -->
+    <profiles>
+        <!--根据环境参数来调整的构件的配置 -->  
+        <profile>
+            <!--该配置的唯一标识符 -->  
+            <id>lovecto_profile</id>
+            <!-- 远程仓库列表 -->  
+            <repositories>
+                <repository>
+                    <id>aliyun</id>
+                    <name>aliyun</name>
+                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <!-- 配置插件下载的仓库列表-->
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>thirdparty_repository</id>
+                    <name>thirdparty_repository</name>
+                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+    <!-- 激活所使用的配置-->
+    <activeProfiles>
+        <activeProfile>lovecto_profile</activeProfile>
+    </activeProfiles>
+</settings>
+
+```
+
+
+#### 从节点镜像Dockerfile
+
+* 使用官方镜像 **jenkins/inbound-agent**
+* 安装环境
+
+```Dockerfile
+FROM jenkins/inbound-agent
+
+USER root
+
+##此处写安装jdk与maven (下载要使用的jdk版本以及maven，以及其他要使用的环境比如node python等)
+
+RUN mkdir -p /opt/java/oracle-jdk8 && cd /opt/java/oracle-jdk8 && \
+    curl -LfsSo /opt/java/oracle-jdk8/jdk-8u421-linux-x64.tar.gz https://download.oracle.com/otn/java/jdk/8u421-b09/d8aa705069af427f9b83e66b34f5e380/jdk-8u421-linux-x64.tar.gz && \
+    tar -xvf jdk-8u421-linux-x64.tar.gz --strip-components=1 && rm -rf jdk-8u421-linux-x64.tar.gz
+
+
+RUN mkdir -p /opt/maven/apache-maven-3.9.9 && cd /opt/maven/apache-maven-3.9.9 && \
+        curl -LfsSo /opt/maven/apache-maven-3.9.9/apache-maven-3.9.9-bin.tar.gz https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz && \
+        tar -xvf apache-maven-3.9.9-bin.tar.gz --strip-components=1 && rm -rf apache-maven-3.9.9-bin.tar.gz
+
+USER jenkins
+
+ADD conf/settings.xml /home/jenkins/.m2/settings.xml
+```
+
+## 二. 启动服务
+
+### 启动主节点
+
+```yaml
+version: '3.3'
+
+services:
+  jenkins:
+    container_name: jenkins-master
+    build: ./container
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+    env_file:
+      - ../conf/config.env
+      - ../conf/common.env
+    volumes:
+      - ./data/agent:/var/jenkins_home
+      - ./data/workspace:/home/jenkins/workspace
+      - ./init.groovy.d:/usr/share/jenkins/ref/init.groovy.d
+```
