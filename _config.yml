@@ -148,6 +148,13 @@ navs:
       - subHref: /k8s.html
         subLabel: 容器编排K8S
 
+  - href: /devops.html
+    label: Devops
+    target: _self
+    subnav:
+      - subHref: /jenkins.html
+        subLabel: Jenkins
+
   - href: /ai.html
     label: 人工智能
     target: _self
