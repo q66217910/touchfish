@@ -1,21 +1,21 @@
 ---
 layout: post
-title: spring-boot-maven-plugin ¹¹½¨¾µÏñ
+title: spring-boot-maven-plugin æ„å»ºé•œåƒ
 category: spring
 tags: [springboot]
 no-post-nav: true
 ---
 
-## pluginÅäÖÃimage
+## pluginé…ç½®image
 
-* name: ¾µÏñµÄÃû³Æ,¿ÉÒÔÊ¹ÓÃ${project.artifactId}:${project.version},Ê¹ÓÃµ±Ç°ÏîÄ¿µÄartifactIdºÍversion
-* builder£º ÓÃÓÚ¹¹½¨µÄ¾µÏñ,¿ÉÒÔÓÃÓÚ×Ô¶¨Òå¾µÏñ,ÀıÈç: maven:3.8.4-eclipse-temurin-17-alpine£¬Ò»Ğ©ÌØÊâ»·¾³
-* env: »·¾³±äÁ¿
-* cleanCache£º ÊÇ·ñÓ¦ÔÚ¹¹½¨Ç°ÇåÀí»º´æ
-* verboseLogging: ÊÇ·ñĞèÒªÏêÏ¸ÈÕÖ¾
-* pullPolicy: ÊÇ·ñÓ¦´ÓÔ¶³Ì´æ´¢¿âÀ­È¡¾µÏñ(ALWAYS/NEVER/IF_NOT_PRESENT)
-* publish: ÊÇ·ñ½«¹¹½¨µÄ¾µÏñÍÆËÍµ½Ô¶³Ì´æ´¢¿â
-* tags: ¾µÏñµÄ±êÇ©
+* name: é•œåƒçš„åç§°,å¯ä»¥ä½¿ç”¨${project.artifactId}:${project.version},ä½¿ç”¨å½“å‰é¡¹ç›®çš„artifactIdå’Œversion
+* builderï¼š ç”¨äºæ„å»ºçš„é•œåƒ,å¯ä»¥ç”¨äºè‡ªå®šä¹‰é•œåƒ,ä¾‹å¦‚: maven:3.8.4-eclipse-temurin-17-alpineï¼Œä¸€äº›ç‰¹æ®Šç¯å¢ƒ
+* env: ç¯å¢ƒå˜é‡
+* cleanCacheï¼š æ˜¯å¦åº”åœ¨æ„å»ºå‰æ¸…ç†ç¼“å­˜
+* verboseLogging: æ˜¯å¦éœ€è¦è¯¦ç»†æ—¥å¿—
+* pullPolicy: æ˜¯å¦åº”ä»è¿œç¨‹å­˜å‚¨åº“æ‹‰å–é•œåƒ(ALWAYS/NEVER/IF_NOT_PRESENT)
+* publish: æ˜¯å¦å°†æ„å»ºçš„é•œåƒæ¨é€åˆ°è¿œç¨‹å­˜å‚¨åº“
+* tags: é•œåƒçš„æ ‡ç­¾
 
 ```xml
 <plugin>
