@@ -6,7 +6,7 @@ tags: [springboot]
 no-post-nav: true
 ---
 
-## plugin配置image
+## plugin配置 （image）
 
 * name: 镜像的名称,可以使用${project.artifactId}:${project.version},使用当前项目的artifactId和version
 * builder： 用于构建的镜像,可以用于自定义镜像,例如: maven:3.8.4-eclipse-temurin-17-alpine，一些特殊环境
@@ -24,18 +24,19 @@ no-post-nav: true
     <configuration>
         <goal>build-image</goal>
         <image>
-            <name>${project.artifactId}</name>
+            <name>registry.cn-shanghai.aliyuncs.com/koala888/${project.artifactId}:${project.version}</name>
+            <tags>
+                <tag>${project.version}</tag>
+                <tag>latest</tag>
+            </tags>
+            <publish>false</publish>
         </image>
-        <layers>
-            <layer>
-            </layer>
-        </layers>
-        <excludes>
-            <exclude>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-            </exclude>
-        </excludes>
     </configuration>
 </plugin>
 ```
+
+## 配置自定义docker （docker）
+
+* host: docker服务地址
+* context: 检索主机配置的 Docker 上下文
+
