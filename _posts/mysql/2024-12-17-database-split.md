@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 数据库分库分表方案
+title: MYSQL数据库分库分表方案
 category: mysql
 tags: [life]
 no-post-nav: true
