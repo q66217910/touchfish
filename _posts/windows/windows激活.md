@@ -11,7 +11,7 @@ change windows edition
 Professional
 ```
 
-这时候会重启电脑。重启后，设置中显示没有激活，输入key
+杩欐椂鍊欎細閲嶅惎鐢佃剳銆傞噸鍚悗锛岃缃腑鏄剧ず娌℃湁婵�娲伙紝杈撳叆key
 
 ```shell
 irm massgrave.dev/get | iex
