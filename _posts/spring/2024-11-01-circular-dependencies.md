@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring—≠ª∑“¿¿µ
-category: spring
+category: springboot
 tags: [springboot]
 no-post-nav: true
 ---

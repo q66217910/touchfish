@@ -1,14 +1,14 @@
 ---
 layout: post
-title: Springboot2日志适配logback13
-category: spring
+title: Springboot2日志适配logback
+category: springboot
 tags: [springboot]
 no-post-nav: true
 ---
 
 # Springboot2日志适配logback13
 
-示例代码github: https://github.com/q66217910/springboot2-adapt-logback13
+示例代码github: https://github.com/q66217910/springboot2-adapt-logback
 
 ## 背景
 

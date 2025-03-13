@@ -1,7 +1,7 @@
 ---
 layout: post
 title: spring-boot-maven-plugin 构建镜像
-category: spring
+category: springboot
 tags: [springboot]
 no-post-nav: true
 ---
