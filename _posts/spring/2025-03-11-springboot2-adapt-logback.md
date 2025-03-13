@@ -6,7 +6,7 @@ tags: [springboot]
 no-post-nav: true
 ---
 
-# Springboot2日志适配logback13
+# Springboot2日志适配logback
 
 示例代码github: https://github.com/q66217910/springboot2-adapt-logback
 
