@@ -126,18 +126,43 @@ sequenceDiagram
 
 ## Part 5 - 高级调度技巧——更精细的控制
 
-- **内容**：
-    - **节点选择器 (nodeSelector)**：最简单的约束，将Pod调度到有特定标签的Node上。
-        - *比喻：指定“必须在有GPU的机房”。*
-    - **节点亲和性 (nodeAffinity)**：比`nodeSelector`更强大、更灵活的表达方式（支持软偏好、硬要求）。
-        - *比喻：“优先(preferred)选择东部区域的Node，必须(required)是SSD硬盘”。*
-    - **Pod亲和性与反亲和性 (podAffinity / podAntiAffinity)**：
-        - **亲和性**：将Pod部署在**类似拓扑域**（如同一个Node、机架、可用区）。例如，前端Pod和它的缓存Pod部署在一起以减少延迟。
-        - **反亲和性**：避免将Pod部署在**类似拓扑域**。例如，将多个API网关Pod分散到不同可用区，实现高可用。
-        - *比喻：“希望(podAffinity)和团队A坐在一起”，“坚决不想(podAntiAffinity)和竞争对手团队B在同一个会议室”。*
-    - **污点和容忍度 (Taints and Tolerations)**：
-        - **Taint（污点）**：打在Node上，表示“拒绝所有不合适的Pod”。
-        - **Toleration（容忍度）**：打在Pod上，表示“我能忍受这个污点”。
-        - *比喻：Node上写着“此节点有异味（污点）”，只有戴着“防毒面具（容忍度）”的Pod才能上来。常用于专用GPU节点、边缘节点等。*
+### 节点选择器 (nodeSelector)
+
+NodeSelector用于将pod调度到添加了指定标签的node节点上。它是通过kubernetes的label-selector机制实现的，也就是说，在pod创建之前，
+会由scheduler使用MatchNodeSelector调度策略进行label匹配，找出目标node，然后将pod调度到目标节点，该匹配规则是强制约束。
+
+
+### 亲和性调度
+
+Affinity主要分为三类：
+
+* nodeAffinity（node亲和性）: 以node为目标，解决pod可以调度到哪些node的问题
+* podAffinity（pod亲和性） : 以pod为目标，解决pod可以和哪些已存在的pod部署在同一个拓扑域中的问题
+* podAntiAffinity（pod反亲和性） : 以pod为目标，解决pod不能和哪些已存在pod部署在同一个拓扑域中的问题
+
+关于亲和性(反亲和性)使用场景的说明：
+
+* 亲和性：如果两个应用频繁交互，那就有必要利用亲和性让两个应用的尽可能的靠近，这样可以减少因网络通信而带来的性能损耗。
+* 反亲和性：当应用的采用多副本部署时，有必要采用反亲和性让各个应用实例打散分布在各个node上，这样可以提高服务的高可用性。
+
+### 污点和容忍度 (Taints and Tolerations)
+
+#### Taint（污点）
+
+Node被设置上污点之后就和Pod之间存在了一种相斥的关系，进而拒绝Pod调度进来，甚至可以将已经存在的Pod驱逐出去。
+
+污点的格式为：key=value:effect, key和value是污点的标签，effect描述污点的作用，支持如下三个选项：
+
+* PreferNoSchedule：kubernetes将尽量避免把Pod调度到具有该污点的Node上，除非没有其他节点可调度
+* NoSchedule：kubernetes将不会把Pod调度到具有该污点的Node上，但不会影响当前Node上已存在的Pod
+* NoExecute：kubernetes将不会把Pod调度到具有该污点的Node上，同时也会将Node上已存在的Pod驱离
+
+#### Toleration（容忍度）
+
+但是如果就是想将一个pod调度到一个有污点的node上去，这时候应该怎么做呢？这就要使用到“Toleration”。
+
+```
+对于nodeAffinity（节点亲和性）无论是硬策略还是软策略方式，都是调度 pod 到预期节点上，而Taints恰好与之相反，如果一个节点标记为 Taints ，除非 pod 也被标识为可以容忍污点节点，否则该 Taints 节点不会被调度 pod。污点是给node节点设置的，容忍度是给pod设置的。
+```
 
 ---
